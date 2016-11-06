@@ -1,0 +1,9 @@
+name: ${project.artifactId}
+main: ${project.groupId}.EnumsK
+version: ${project.version}
+
+description: Addon to Njol's Skript to add enum conditions
+
+depend: [Skript]
+
+author: kh498
