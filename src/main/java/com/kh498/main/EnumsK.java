@@ -19,7 +19,6 @@ package com.kh498.main;
 
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kh498.conditions.ConEnum;
