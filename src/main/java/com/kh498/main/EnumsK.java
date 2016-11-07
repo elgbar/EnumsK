@@ -62,33 +62,12 @@ public class EnumsK extends JavaPlugin
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "(@|E[num]) %string%.%string%");
 			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "(@|E[num]) %string%.*");
 
-			/* Call the event when the plugin is loading */
-			callEnum ();
 		} else
 		{
 			this.getLogger ().log (Level.SEVERE, "Could not enable EnumsK due too Skript not accepting registrations.");
 			this.getServer ().getPluginManager ().disablePlugin (this);
 			return;
 		}
-
-	}
-
-	@ Override
-	public void onDisable ()
-	{
-	}
-
-	public void callEnum ()
-	{
-		this.getServer ().getScheduler ().scheduleSyncDelayedTask (this, new Runnable ()
-		{
-			@ Override
-			public void run ()
-			{
-				EnumEvent event = new EnumEvent ();
-				Bukkit.getPluginManager ().callEvent (event);
-			}
-		}, 1L);
 	}
 
 	/**
