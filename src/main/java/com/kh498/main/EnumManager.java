@@ -88,7 +88,7 @@ public class EnumManager
 	 *            String
 	 * @return boolean
 	 */
-	public static boolean isValidEnum (String enumName)
+	private static boolean isValidEnum (String enumName)
 	{
 		return skEnums.containsKey (enumName);
 	}
