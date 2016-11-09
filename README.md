@@ -3,35 +3,35 @@
 With this addon you can declare enums with skript.
 
 ## Syntax
->The event
+>The only place where you can declare new enums (event)
 ```C#
 Enums
 ```
 
 ---
 
->Declare a new enum
+>Declare a new enum (condition)
 ```C#
 Enum %string%
 ```
 
 ---
 
->Add a value to an enum
+>Add a value to an enum (condition)
 ```C#
 %string%[]:[]%object%
 ```
 
 ---
 
->Get an enum value
+>Get an enum value (expression)
 ```C#
 |%string%.%string%|
 ```
 
 ---
 
->Get all values for an enum
+>Get all values for an enum (expression)
 ```C#
 |%string%.*|
 ```
