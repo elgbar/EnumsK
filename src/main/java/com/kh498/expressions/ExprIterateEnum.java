@@ -27,7 +27,6 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 		return true;
 	}
 
-	//[%string%]
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
@@ -35,19 +34,15 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	{
 		final String enumName = e0.getSingle (event);
 
-		Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
+		try
+		{
+			Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
+			return objectMap.toArray (new Object[objectMap.size ()]);
+		} catch (NullPointerException ex)
+		{
+		}
 
-		Object[] obj = objectMap.toArray (new Object[objectMap.size ()]);
-
-		/* Equal performance? */
-		//		Object[] obj = new Object[objectMap.size ()];
-		//		int i = 0;
-		//		for (Object o : objectMap)
-		//		{
-		//			obj[i++] = o;
-		//		}
-
-		return obj;
+		return null;
 	}
 
 	@ Override
