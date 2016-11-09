@@ -17,13 +17,13 @@ import ch.njol.util.Kleenean;
 public class ExprIterateEnum extends SimpleExpression<Object>
 {
 
-	private Expression<String> e0;
+	private Expression<Object> e0;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
-		e0 = (Expression<String>) exprs[0];
+		e0 = (Expression<Object>) exprs[0];
 		return true;
 	}
 
@@ -32,11 +32,11 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event event)
 	{
-		final String enumName = e0.getSingle (event);
+		final Object enumName = e0.getSingle (event);
 
 		try
 		{
-			Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
+			Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();
 			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)
 		{

@@ -17,7 +17,7 @@ import ch.njol.util.Kleenean;
 public class ConEnum extends Condition
 {
 	private Object expr0;
-	public static String value;
+	public static Object value;
 
 	@ Override
 	public boolean init (Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3)
@@ -27,7 +27,7 @@ public class ConEnum extends Condition
 		return EnumManager.isValidEvent ("A new enum cannot be declared outside of Enums event.");
 	}
 
-	public static String getvalue ()
+	public static Object getvalue ()
 	{
 		return value;
 	}
@@ -42,7 +42,7 @@ public class ConEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-		value = ((Expression<String>) expr0).getSingle (e);
+		value = ((Expression<Object>) expr0).getSingle (e);
 
 		return EnumManager.addEnum (value);
 	}

@@ -19,7 +19,7 @@ public class ConEnumValue extends Condition
 	private Object expr0;
 	private Object expr1;
 
-	private String value;
+	private Object value;
 	private Object obj;
 
 	@ Override
@@ -42,9 +42,9 @@ public class ConEnumValue extends Condition
 	public boolean check (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
-		String key = this.getParent ().toString ().replace ("Enum ", "");
+		Object key = this.getParent ().toString ().replace ("Enum ", "");
 
-		value = ((Expression<String>) expr0).getSingle (e);
+		value = ((Expression<Object>) expr0).getSingle (e);
 		obj = ((Expression<Object>) expr1).getSingle (e);
 
 		return EnumManager.addValue (key, value, obj);

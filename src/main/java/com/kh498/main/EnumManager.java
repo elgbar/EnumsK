@@ -14,40 +14,40 @@ import ch.njol.skript.Skript;
  */
 public class EnumManager
 {
-	private static LinkedHashMap<String, Object> skEnums;
+	private static LinkedHashMap<Object, Object> skEnums;
 
 	EnumManager ()
 	{
-		skEnums = new LinkedHashMap<String, Object> ();
+		skEnums = new LinkedHashMap<Object, Object> ();
 	}
 
 	/**
 	 * @param newEnumName
-	 *            String
+	 *            Object
 	 * @return False if an enum with that name already exists
 	 */
-	public static boolean addEnum (String newEnumName)
+	public static boolean addEnum (Object newEnumName)
 	{
 		if (isValidEnum (newEnumName))
 		{
 			Skript.error ("An enum with the name '" + newEnumName + "' already exists.");
 			return false;
 		}
-		skEnums.put (newEnumName, new LinkedHashMap<String, Object> ());
+		skEnums.put (newEnumName, new LinkedHashMap<Object, Object> ());
 		return true;
 	}
 
 	//TODO Maybe make the enum hold multible values (making each values a new class)
 	/**
 	 * @param enumName
-	 *            String, The enum to add the value to
+	 *            Object, The enum to add the value to
 	 * @param valueName
-	 *            String, The name of the enum value
+	 *            Object, The name of the enum value
 	 * @param obj
 	 *            Object, the object the enum is refering to
 	 * @return false if the mother enum does exist
 	 */
-	public static boolean addValue (String enumName, String valueName, Object obj)
+	public static boolean addValue (Object enumName, Object valueName, Object obj)
 	{
 		if (!isValidEnum (enumName))
 		{
@@ -56,11 +56,11 @@ public class EnumManager
 		}
 
 		@ SuppressWarnings ("unchecked")
-		Map<String, Object> enumValues = (Map<String, Object>) skEnums.get (enumName);
+		Map<Object, Object> enumValues = (Map<Object, Object>) skEnums.get (enumName);
 
 		if (enumValues == null)
 		{
-			enumValues = new LinkedHashMap<String, Object> ();
+			enumValues = new LinkedHashMap<Object, Object> ();
 		}
 
 		enumValues.put (valueName, obj);
@@ -85,15 +85,15 @@ public class EnumManager
 
 	/**
 	 * @param enumName
-	 *            String
+	 *            Object
 	 * @return boolean
 	 */
-	private static boolean isValidEnum (String enumName)
+	private static boolean isValidEnum (Object enumName)
 	{
 		return skEnums.containsKey (enumName);
 	}
 
-	public static LinkedHashMap<String, Object> getEnums ()
+	public static LinkedHashMap<Object, Object> getEnums ()
 	{
 		return skEnums;
 	}

@@ -16,15 +16,15 @@ import ch.njol.util.Kleenean;
 public class ExprSingularEnum extends SimpleExpression<Object>
 {
 
-	private Expression<String> e0;
-	private Expression<String> e1;
+	private Expression<Object> e0;
+	private Expression<Object> e1;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
-		e0 = (Expression<String>) exprs[0];
-		e1 = (Expression<String>) exprs[1];
+		e0 = (Expression<Object>) exprs[0];
+		e1 = (Expression<Object>) exprs[1];
 		return true;
 	}
 
@@ -32,15 +32,15 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event event)
 	{
-		final String enumName = e0.getSingle (event);
-		final String enumValue = e1.getSingle (event);
+		final Object enumName = e0.getSingle (event);
+		final Object enumValue = e1.getSingle (event);
 
-		/* Get the object by first getting the value map (Map<String, Object>) then getting the value */
+		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 
 		try
 		{
 			@ SuppressWarnings ("unchecked")
-			Object[] obj2 = { ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
+			Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
 			return obj2;
 		} catch (NullPointerException ex)
 		{
