@@ -12,28 +12,28 @@ Enums
 
 >Declare a new enum (condition)
 ```C#
-Enum %object%
+[create ][new ]enum %object%
 ```
 
 ---
 
 >Add a value to an enum (condition)
 ```C#
-%object%[]:[]%object%
+[set value ]%object%( to |[]:[])%object%
 ```
 
 ---
 
 >Get an enum value (expression)
 ```C#
-|%object%.%object%|
+value %object% (from|of) enum %object%
 ```
 
 ---
 
 >Get all values for an enum (expression)
 ```C#
-|%object%.*|
+[all] values (from|of) enum %object%
 ```
 
 ## Example
@@ -41,24 +41,25 @@ Enum %object%
 ```ruby
 enums: #You can only declare enums under this event
     #Do not name the enum in plural, follow java see http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
-    enum "Sword":
-        "OK": iron sword named "&eOkay sword" #You can use all objects
-        "COOL": diamond sword named "&cCool sword bro" with lore "&7Awe YEAH" #Even objects with spesial features like name and lore
-    enum "Capability":
+    create new enum "Sword": #Skript friendly syntax
+        set value "OK" to iron sword named "&eOkay sword" #You can use all objects
+        set value "COOL" to diamond sword named "&cCool sword bro" with lore "&7Awe YEAH" #Even objects with spesial features like name and lore
+    enum "Capability": #A bit more minimalistic
         "STRING": "This is a string"
-        "NUMBER": 42
+        455: 42
         "PLAYER": "kh498" parsed as player
 
 command /enum:
     trigger:
         #As of 0.0.0-ALPHA you must set an enum to a variable before you can use it
-        set {_player} to |"Capability"."PLAYER"|
-        set {_sword} to |"Sword"."COOL"|
+        set {_player} to value "PLAYER" from enum "Capability"
+        set {_sword} to value "COOL" from enum "Sword"
         give {_player} 1 of {_sword} #This works, try it out by editing the Capability.PLAYER enum
 
         #BUT you can use it inline like this:
-        send "%|""Capability"".*|%" #They are listed in the order they were declared
-        send "%|""Sword"".""OK""|%"
+        send "%all values from enum ""Capability""%" #They are listed in the order they were declared
+        send "%value ""OK"" from enum ""Sword""%"
+        send "%value 455 from enum ""Capability""%"
 
 ```
 
