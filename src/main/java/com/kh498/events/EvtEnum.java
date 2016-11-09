@@ -44,7 +44,6 @@ public class EvtEnum extends SelfRegisteringSkriptEvent
 	@ Override
 	public void register (final Trigger t)
 	{
-		EnumManager.flushEnums ();
 		t.execute (new EnumEvent ());
 	}
 
@@ -56,6 +55,7 @@ public class EvtEnum extends SelfRegisteringSkriptEvent
 	@ Override
 	public void unregisterAll ()
 	{
+		EnumManager.flushEnums ();
 	}
 
 	@ Override
