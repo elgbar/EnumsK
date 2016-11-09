@@ -46,11 +46,6 @@ public class ConEnum extends Condition
 		return EnumManager.isValidEvent ("A new enum cannot be declared outside of Enums event.");
 	}
 
-	public static Object getvalue ()
-	{
-		return value;
-	}
-
 	@ Override
 	public String toString (@ Nullable Event arg0, boolean arg1)
 	{

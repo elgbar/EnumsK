@@ -41,13 +41,9 @@ public class EvtEnum extends SelfRegisteringSkriptEvent
 		return true;
 	}
 
-	@ Nullable
-	private Trigger t;
-
 	@ Override
 	public void register (final Trigger t)
 	{
-		this.t = t;
 		EnumManager.flushEnums ();
 		t.execute (new EnumEvent ());
 	}
