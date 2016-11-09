@@ -51,8 +51,8 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event event)
 	{
-		final Object enumName = e0.getSingle (event);
-		final Object enumValue = e1.getSingle (event);
+		final Object enumValue = e0.getSingle (event);
+		final Object enumName = e1.getSingle (event);
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 

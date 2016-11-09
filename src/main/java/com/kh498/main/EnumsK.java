@@ -50,16 +50,15 @@ public class EnumsK extends JavaPlugin
 			Skript.registerAddon (this);
 
 			/* The event */
-			//Skript.registerEvent ("enums register", SimpleEvent.class, EvtEnum.class, "Enums");
 			Skript.registerEvent ("enums register", EvtEnum.class, EnumEvent.class, "Enums");
 
 			/* Conditions */
-			Skript.registerCondition (ConEnum.class, "Enum %object%");
-			Skript.registerCondition (ConEnumValue.class, "%object%[]:[]%object%");
+			Skript.registerCondition (ConEnum.class, "[create ][new ]enum %object%");
+			Skript.registerCondition (ConEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
 
 			/* Expressions */
-			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.%object%\\|");
-			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.*\\|");
+			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "value %object% (from|of) enum %object%");
+			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "[all] values (from|of) enum %object%");
 
 		} else
 		{
