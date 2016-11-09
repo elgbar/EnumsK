@@ -12,28 +12,28 @@ Enums
 
 >Declare a new enum (condition)
 ```C#
-Enum %string%
+Enum %object%
 ```
 
 ---
 
 >Add a value to an enum (condition)
 ```C#
-%string%[]:[]%object%
+%object%[]:[]%object%
 ```
 
 ---
 
 >Get an enum value (expression)
 ```C#
-|%string%.%string%|
+|%object%.%object%|
 ```
 
 ---
 
 >Get all values for an enum (expression)
 ```C#
-|%string%.*|
+|%object%.*|
 ```
 
 ## Example
