@@ -61,7 +61,7 @@ public class EvtEnum extends SelfRegisteringSkriptEvent
 	@ Override
 	public String toString (final @ Nullable Event e, final boolean debug)
 	{
-		return "Reload enums";
+		return "Enum event";
 	}
 
 }
