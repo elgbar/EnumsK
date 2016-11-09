@@ -25,6 +25,7 @@ import org.bukkit.event.Event;
 
 import com.kh498.main.EnumManager;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -40,6 +41,8 @@ public class ConEnumValue extends Condition
 
 	private Object value;
 	private Object obj;
+
+	private Object key = null;
 
 	@ Override
 	public boolean init (Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
@@ -61,7 +64,15 @@ public class ConEnumValue extends Condition
 	public boolean check (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
-		Object key = this.getParent ().toString ().replace ("Enum ", "");
+		try
+		{
+			key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
+		} catch (NullPointerException ex)
+		{
+			Skript.error (
+					"You cannot use the colon sign ( : ) when setting a enums value (Note: the error is not the enums event, skipt is just bugged)");
+			return false;
+		}
 
 		value = ((Expression<Object>) expr0).getSingle (e);
 		obj = ((Expression<Object>) expr1).getSingle (e);
