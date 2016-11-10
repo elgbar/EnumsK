@@ -36,7 +36,7 @@ import ch.njol.util.Kleenean;
 public class ConEnum extends Condition
 {
 	private Object expr0;
-	public static Object value;
+	public static Object value = null;
 
 	@ Override
 	public boolean init (Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3)
@@ -52,12 +52,10 @@ public class ConEnum extends Condition
 		return "Enum " + value;
 	}
 
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean check (Event e)
 	{
-		value = ((Expression<Object>) expr0).getSingle (e);
-
+		value = EnumManager.getProperEnumName (e, expr0);
 		return EnumManager.addEnum (value);
 	}
 

@@ -59,7 +59,7 @@ public class ConEnumValue extends Condition
 		return "Enum value";
 	}
 
-	@ SuppressWarnings ("unchecked")
+		Object key = null;
 	@ Override
 	public boolean check (Event e)
 	{
@@ -74,8 +74,10 @@ public class ConEnumValue extends Condition
 			return false;
 		}
 
-		value = ((Expression<Object>) expr0).getSingle (e);
-		obj = ((Expression<Object>) expr1).getSingle (e);
+//		value = ((Expression<Object>) expr0).getSingle (e);
+//		obj = ((Expression<Object>) expr1).getSingle (e);
+		value = EnumManager.getProperEnumName (e, expr0);
+		obj = EnumManager.getProperEnumName (e, expr1);
 
 		return EnumManager.addValue (key, value, obj);
 	}

@@ -42,17 +42,19 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
-		e0 = (Expression<Object>) exprs[0];
+		expr0 = (Expression<Object>) exprs[0];
 		return true;
 	}
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
-	protected Object[] get (Event event)
+	protected Object[] get (Event e)
 	{
 		final Object enumName = e0.getSingle (event);
 
+//		final Object enumName = expr0.getSingle (e);
+		final Object enumName = EnumManager.getProperEnumName (e, expr0);
 		try
 		{
 			Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();

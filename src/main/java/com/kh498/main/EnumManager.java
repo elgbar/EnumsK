@@ -21,11 +21,15 @@ package com.kh498.main;
 
 import java.util.LinkedHashMap;
 
+import org.bukkit.event.Event;
+
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.lang.Expression;
 
 /**
  * @author kh498
@@ -120,4 +124,24 @@ public class EnumManager
 	{
 		skEnums.clear ();
 	}
+
+	/**
+	 * @param e
+	 *        The current event
+	 * @param expr
+	 *        The expression gotten from init()
+	 * @return Either expr from the event, if not valid then the string version of expr
+	 */
+	@ SuppressWarnings ("unchecked")
+	public static Object getProperEnumName (Event e, Object expr)
+	{
+		try
+		{
+			return ((Expression<Object>) expr).getSingle (e);
+		} catch (SkriptAPIException e1)
+		{
+			return "" + expr;
+		}
+	}
+
 }

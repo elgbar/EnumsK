@@ -35,24 +35,26 @@ import ch.njol.util.Kleenean;
 public class ExprSingularEnum extends SimpleExpression<Object>
 {
 
-	private Expression<Object> e0;
-	private Expression<Object> e1;
+	private Expression<Object> expr0;
+	private Expression<Object> expr1;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
-		e0 = (Expression<Object>) exprs[0];
-		e1 = (Expression<Object>) exprs[1];
+		expr0 = (Expression<Object>) exprs[0];
+		expr1 = (Expression<Object>) exprs[1];
 		return true;
 	}
 
 	@ Override
 	@ Nullable
-	protected Object[] get (Event event)
+	protected Object[] get (Event e)
 	{
-		final Object enumValue = e0.getSingle (event);
-		final Object enumName = e1.getSingle (event);
+//		final Object enumValue = e0.getSingle (event);
+//		final Object enumName = e1.getSingle (event);
+		final Object enumValue = EnumManager.getProperEnumName (e, expr0);
+		final Object enumName = EnumManager.getProperEnumName (e, expr1);
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 
