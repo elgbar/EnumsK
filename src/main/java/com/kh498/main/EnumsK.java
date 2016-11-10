@@ -59,7 +59,11 @@ public class EnumsK extends JavaPlugin
 			Skript.registerCondition (ConEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
 
 			/* Expressions */
+
+			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.%object%\\|");
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "value %object% (from|of) enum %object%");
+
+			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.*\\|");
 			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "[all] values (from|of) enum %object%");
 
 		} else
