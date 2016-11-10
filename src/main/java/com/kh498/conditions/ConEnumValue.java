@@ -26,6 +26,7 @@ import org.bukkit.event.Event;
 import com.kh498.main.EnumManager;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptAPIException;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -57,6 +58,7 @@ public class ConEnumValue extends Condition
 		return "Enum value";
 	}
 
+	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean check (Event e)
 	{
@@ -72,10 +74,15 @@ public class ConEnumValue extends Condition
 			return false;
 		}
 
-//		value = ((Expression<Object>) expr0).getSingle (e);
-//		obj = ((Expression<Object>) expr1).getSingle (e);
 		value = EnumManager.getProperEnumName (e, expr0);
-		obj = EnumManager.getProperEnumName (e, expr1);
+		try
+		{
+			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
+		} catch (SkriptAPIException ex)
+		{
+			Skript.error ("The enum value " + expr1 + " is not a valid object, all enum values below it will NOT be loaded in.");
+			return false;
+		}
 
 		return EnumManager.addValue (key, value, obj);
 	}
