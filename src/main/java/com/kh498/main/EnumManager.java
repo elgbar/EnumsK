@@ -1,4 +1,4 @@
-/**
+/*
  *  This file is part of Enumsk
  *  
  *  Copyright (C) 2016, kh498
@@ -42,7 +42,7 @@ public class EnumManager
 
 	/**
 	 * @param newEnumName
-	 *            Object
+	 *        Object
 	 * @return False if an enum with that name already exists
 	 */
 	public static boolean addEnum (Object newEnumName)
@@ -61,9 +61,9 @@ public class EnumManager
 	 * @param enumName
 	 *            Object, The enum to add the value to
 	 * @param valueName
-	 *            Object, The name of the enum value
+	 *        Object, The name of the enum value
 	 * @param obj
-	 *            Object, the object the enum is refering to
+	 *        Object, the object the enum is refering to
 	 * @return false if the mother enum does exist
 	 */
 	public static boolean addValue (Object enumName, Object valueName, Object obj)
@@ -89,7 +89,7 @@ public class EnumManager
 
 	/**
 	 * @param errorMsg
-	 *            Message to display if the event is not valid
+	 *        Message to display if the event is not valid
 	 * @return true if the current skript event is of the type {@link EvtEnum}
 	 */
 	public static boolean isValidEvent (String errorMsg)
@@ -104,7 +104,7 @@ public class EnumManager
 
 	/**
 	 * @param enumName
-	 *            Object
+	 *        Object
 	 * @return boolean
 	 */
 	private static boolean isValidEnum (Object enumName)

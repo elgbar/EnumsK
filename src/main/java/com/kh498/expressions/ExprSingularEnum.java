@@ -1,4 +1,4 @@
-/**
+/*
  *  This file is part of Enumsk
  *  
  *  Copyright (C) 2016, kh498
