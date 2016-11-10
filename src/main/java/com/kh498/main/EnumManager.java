@@ -20,7 +20,6 @@
 package com.kh498.main;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
@@ -75,7 +74,7 @@ public class EnumManager
 		}
 
 		@ SuppressWarnings ("unchecked")
-		Map<Object, Object> enumValues = (Map<Object, Object>) skEnums.get (enumName);
+		LinkedHashMap<Object, Object> enumValues = (LinkedHashMap<Object, Object>) skEnums.get (enumName);
 
 		if (enumValues == null)
 		{
