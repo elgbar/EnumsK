@@ -57,14 +57,21 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 		final Object enumName = EnumManager.getProperEnumName (e, expr1);
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-
 		try
 		{
 			@ SuppressWarnings ("unchecked")
-			Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
-			return obj2;
-		} catch (NullPointerException ex)
+			Object[] obj = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
+			return obj;
+		} catch (NullPointerException e1)
 		{
+			try
+			{
+				@ SuppressWarnings ("unchecked")
+				Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumValue)).get (enumName) };
+				return obj2;
+			} catch (NullPointerException e2)
+			{
+			}
 		}
 		return null;
 	}
