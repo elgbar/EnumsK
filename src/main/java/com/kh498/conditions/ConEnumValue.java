@@ -42,8 +42,6 @@ public class ConEnumValue extends Condition
 	private Object value;
 	private Object obj;
 
-	private Object key = null;
-
 	@ Override
 	public boolean init (Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
@@ -59,11 +57,11 @@ public class ConEnumValue extends Condition
 		return "Enum value";
 	}
 
-		Object key = null;
 	@ Override
 	public boolean check (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
+		Object key = null;
 		try
 		{
 			key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");

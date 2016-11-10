@@ -39,14 +39,14 @@ import ch.njol.skript.lang.ExpressionType;
 public class EnumsK extends JavaPlugin
 {
 	private static EnumsK instance;
-	private static EnumManager enumList;
 
 	@ Override
 	public void onEnable ()
 	{
 		instance = this;
 
-		enumList = new EnumManager ();
+		new EnumManager ();
+
 		if (Skript.isAcceptRegistrations ())
 		{
 			Skript.registerAddon (this);
@@ -76,13 +76,5 @@ public class EnumsK extends JavaPlugin
 	public static EnumsK getInstance ()
 	{
 		return instance;
-	}
-
-	/**
-	 * @return the list of all enums
-	 */
-	public static EnumManager getEnumList ()
-	{
-		return enumList;
 	}
 }

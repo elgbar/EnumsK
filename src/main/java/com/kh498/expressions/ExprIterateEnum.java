@@ -36,7 +36,7 @@ import ch.njol.util.Kleenean;
 public class ExprIterateEnum extends SimpleExpression<Object>
 {
 
-	private Expression<Object> e0;
+	private Expression<Object> expr0;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
@@ -51,18 +51,16 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		final Object enumName = e0.getSingle (event);
 
 //		final Object enumName = expr0.getSingle (e);
 		final Object enumName = EnumManager.getProperEnumName (e, expr0);
 		try
 		{
-			Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();
+			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();
 			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)
 		{
 		}
-
 		return null;
 	}
 
