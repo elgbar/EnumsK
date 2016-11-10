@@ -59,7 +59,7 @@ public class EnumManager
 	//TODO Maybe make the enum hold multible values (making each values a new class)
 	/**
 	 * @param enumName
-	 *            Object, The enum to add the value to
+	 *        Object, The enum to add the value to
 	 * @param valueName
 	 *        Object, The name of the enum value
 	 * @param obj
