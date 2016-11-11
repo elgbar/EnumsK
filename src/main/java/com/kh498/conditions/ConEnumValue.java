@@ -63,7 +63,7 @@ public class ConEnumValue extends Condition
 	public boolean check (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
-		Object key = null;
+		Object key;
 		try
 		{
 			key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
@@ -74,16 +74,17 @@ public class ConEnumValue extends Condition
 			return false;
 		}
 
-		value = EnumManager.getProperEnumName (e, expr0);
 		try
 		{
 			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
+
 		} catch (SkriptAPIException ex)
 		{
 			Skript.error ("The enum value " + expr1 + " is not a valid object, all enum values below it will NOT be loaded in.");
 			return false;
 		}
 
+		value = EnumManager.getProperEnumName (e, expr0);
 		return EnumManager.addValue (key, value, obj);
 	}
 
