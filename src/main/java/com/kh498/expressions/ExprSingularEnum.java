@@ -37,6 +37,7 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 
 	private Expression<Object> expr0;
 	private Expression<Object> expr1;
+	private String fullExpr;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
@@ -44,6 +45,7 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	{
 		expr0 = (Expression<Object>) exprs[0];
 		expr1 = (Expression<Object>) exprs[1];
+		fullExpr = parseResult.expr;
 		return true;
 	}
 
@@ -51,24 +53,27 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-//		final Object enumValue = e0.getSingle (event);
-//		final Object enumName = e1.getSingle (event);
-		final Object enumValue = EnumManager.getProperEnumName (e, expr0);
-		final Object enumName = EnumManager.getProperEnumName (e, expr1);
+		Object enumValue = EnumManager.getProperEnumName (e, expr0);
+		Object enumName = EnumManager.getProperEnumName (e, expr1);
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-		try
-		{
-			@ SuppressWarnings ("unchecked")
-			Object[] obj = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
-			return obj;
-		} catch (NullPointerException e1)
+		if ("|".equals (fullExpr.charAt (0)))
 		{
 			try
 			{
 				@ SuppressWarnings ("unchecked")
 				Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumValue)).get (enumName) };
 				return obj2;
+			} catch (NullPointerException e1)
+			{
+			}
+		} else
+		{
+			try
+			{
+				@ SuppressWarnings ("unchecked")
+				Object[] obj = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
+				return obj;
 			} catch (NullPointerException e2)
 			{
 			}
