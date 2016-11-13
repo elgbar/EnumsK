@@ -63,15 +63,7 @@ public class EffEnumValue extends Effect
 	protected void execute (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
-		Object key;
-		try
-		{
-			key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
-		} catch (NullPointerException ex)
-		{
-			Skript.error ("You cannot use the colon sign ( : ) when setting a enums value");
-			return;
-		}
+		Object key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
 
 		try
 		{
