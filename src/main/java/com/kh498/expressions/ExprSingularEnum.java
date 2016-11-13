@@ -57,7 +57,7 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 		Object enumName = EnumManager.getProperEnumName (e, expr1);
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-		if ("|".equals (fullExpr.charAt (0)))
+		if (fullExpr.charAt (0) == '|')
 		{
 			try
 			{
