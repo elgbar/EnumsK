@@ -91,3 +91,7 @@ For variables:<br>
 ![image](https://cloud.githubusercontent.com/assets/1556738/20042712/48eb86b6-a47f-11e6-97cd-e49e93bfc511.png)
 
 **But note that performance may vary**
+
+## What's next?
+* Better usability
+ * This will mean you can do ```"text" is |enum.sameText|``` and ```give player |enum.item|```
