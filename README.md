@@ -80,7 +80,7 @@ command /enum:
 ```
 
 ## Performance
-My tests shows that accesing enums are just as fast (if not even sightly faster) than accessing normal global variables.
+My tests shows that accessing enums are just as fast (if not even slightly faster) than accessing normal global variables.
 
 In my [test skript](https://gist.github.com/kh498/6fe84df0f1a37de294147e456f721eb5) I got these results from running it once:
 
