@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kh498.conditions.ConEnum;
-import com.kh498.conditions.ConEnumValue;
+import com.kh498.effects.EffEnumValue;
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
 import com.kh498.expressions.ExprIterateEnum;
@@ -54,12 +54,13 @@ public class EnumsK extends JavaPlugin
 			/* The event */
 			Skript.registerEvent ("enums register", EvtEnum.class, EnumEvent.class, "Enums");
 
-			/* Conditions */
+			/* Condition */
 			Skript.registerCondition (ConEnum.class, "[create ][new ]enum %object%");
-			Skript.registerCondition (ConEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
+
+			/* Effect */
+			Skript.registerEffect (EffEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
 
 			/* Expressions */
-
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.%object%\\|");
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "value %object% (from|of) enum %object%");
 

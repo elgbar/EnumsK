@@ -17,7 +17,7 @@
  *  along with Enumsk.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.kh498.conditions;
+package com.kh498.effect;
 
 import javax.annotation.Nullable;
 
@@ -27,7 +27,7 @@ import com.kh498.main.EnumManager;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
-import ch.njol.skript.lang.Condition;
+import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
@@ -35,7 +35,7 @@ import ch.njol.util.Kleenean;
 /**
  * @author kh498
  */
-public class ConEnumValue extends Condition
+public class EffEnumValue extends Effect
 {
 	private Object expr0;
 	private Object expr1;
@@ -60,7 +60,7 @@ public class ConEnumValue extends Condition
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
-	public boolean check (Event e)
+	protected void execute (Event e)
 	{
 		/* Get the parents expression (the key to the enum-map) */
 		Object key;
@@ -69,9 +69,8 @@ public class ConEnumValue extends Condition
 			key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
 		} catch (NullPointerException ex)
 		{
-			Skript.error (
-					"You cannot use the colon sign ( : ) when setting a enums value (Note: the error is not the enums event, skipt is just bugged)");
-			return false;
+			Skript.error ("You cannot use the colon sign ( : ) when setting a enums value");
+			return;
 		}
 
 		try
@@ -80,11 +79,11 @@ public class ConEnumValue extends Condition
 		} catch (SkriptAPIException ex)
 		{
 			Skript.error ("The enum value " + expr1 + " is not a valid object, all enum values below it will NOT be loaded in.");
-			return false;
+			return;
 		}
 
 		value = EnumManager.getProperEnumName (e, expr0);
-		return EnumManager.addValue (key, value, obj);
+		EnumManager.addValue (key, value, obj);
 	}
 
 }
