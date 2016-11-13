@@ -28,38 +28,54 @@ Enums
 ```C#
 value %object% (from|of) enum %object%
 ```
-
+or
+```C#
+|%object%.%object%|
+```
 ---
 
 >Get all values for an enum (expression)
 ```C#
 [all] values (from|of) enum %object%
 ```
+or
+```C#
+|%object%.*|
+```
+
+
 
 ## Example
 
 ```ruby
-enums: #You can only declare enums under this event
-    #Do not name the enum in plural, follow java see http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
-    create new enum "Sword": #Skript friendly syntax
-        set value "OK" to iron sword named "&eOkay sword" #You can use all objects
-        set value "COOL" to diamond sword named "&cCool sword bro" with lore "&7Awe YEAH" #Even objects with spesial features like name and lore
-    enum "Capability": #A bit more minimalistic
-        "STRING": "This is a string"
-        455: 42
-        "PLAYER": "kh498" parsed as player
+enums: #You can only declare enums under this event	#Do not name the enum in plural, follow java see http://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
+	create new enum "Sword": #Skript friendly syntax
+		set value "OK" to iron sword #You can use all objects
+		set value "COOL" to diamond sword named "&cCool sword bro" #Even objects with spesial features like name
+	enum Capability: #A bit more minimalistic
+		"STRING": "This is a string"
+		455: 42
+		PLAYER1: "kh498" parsed as offline player #Do not use a type as an enum name eg player, console, tool as skript parsed them as %player%, %console% or %tool%
+		item1 : iron sword named "%|Capability.PLAYER1|%"
 
 command /enum:
-    trigger:
-        #As of 0.0.0-ALPHA you must set an enum to a variable before you can use it
-        set {_player} to value "PLAYER" from enum "Capability"
-        set {_sword} to value "COOL" from enum "Sword"
-        give {_player} 1 of {_sword} #This works, try it out by editing the Capability.PLAYER enum
+	trigger:
+		set {_player} to |Capability.PLAYER1|
+		set {_item} to |Capability.item1|
+		give {_player} {_item} #This works, try it out by editing the Capability.PLAYER1 enum
 
-        #BUT you can use it inline like this:
-        send "%all values from enum ""Capability""%" #They are listed in the order they were declared
-        send "%value ""OK"" from enum ""Sword""%"
-        send "%value 455 from enum ""Capability""%"
+		#!Note: You cannot do
+		#give player |Capability.item1| #Gives no error, but doesnt give the player an item
+		#!or
+		#give |Capability.PLAYER1| {_item} #throws: 'single enum value can't have anything added to it'
+
+		if {_item} is value item1 from enum Capability: #Works as expected
+			send "true"
+		#give player value item from enum Capability!
+		#BUT you can use it inline like this:
+		send "%all values from enum Capability%" #They are listed in the order they were declared
+		send "%value ""OK"" from enum ""Sword""%"
+		send "%value 455 from enum Capability%"
 
 ```
 
