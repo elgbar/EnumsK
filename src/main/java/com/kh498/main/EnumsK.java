@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kh498.conditions.ConEnum;
-import com.kh498.effects.EffEnumValue;
+import com.kh498.effect.EffEnumValue;
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
 import com.kh498.expressions.ExprIterateEnum;
