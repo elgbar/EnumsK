@@ -39,7 +39,7 @@ public class ConEnum extends Condition
 	public static Object value = null;
 
 	@ Override
-	public boolean init (Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3)
+	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
 		expr0 = expr[0];
 
@@ -55,6 +55,7 @@ public class ConEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
+
 		value = EnumManager.getProperEnumName (e, expr0);
 		return EnumManager.addEnum (value);
 	}

@@ -44,7 +44,7 @@ public class ConEnumValue extends Condition
 	private Object obj;
 
 	@ Override
-	public boolean init (Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
+	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
 		expr0 = expr[0];
 		expr1 = expr[1];
@@ -77,7 +77,6 @@ public class ConEnumValue extends Condition
 		try
 		{
 			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
-
 		} catch (SkriptAPIException ex)
 		{
 			Skript.error ("The enum value " + expr1 + " is not a valid object, all enum values below it will NOT be loaded in.");
