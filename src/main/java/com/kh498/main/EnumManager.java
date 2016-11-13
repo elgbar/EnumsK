@@ -95,11 +95,11 @@ public class EnumManager
 	 *        Message to display if the event is not valid
 	 * @return true if the current skript event is of the type {@link EvtEnum}
 	 */
-	public static boolean isValidEvent (String errorMsg)
+	public static boolean isValidEvent (String errMsg)
 	{
 		if (!ScriptLoader.isCurrentEvent (EnumEvent.class))
 		{
-			Skript.error (errorMsg);
+			Skript.error (errMsg);
 			return false;
 		}
 		return true;
@@ -143,5 +143,4 @@ public class EnumManager
 			return "" + expr;
 		}
 	}
-
 }

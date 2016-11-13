@@ -47,7 +47,7 @@ public class ConEnum extends Condition
 	}
 
 	@ Override
-	public String toString (@ Nullable Event arg0, boolean arg1)
+	public String toString (@ Nullable Event e, boolean debug)
 	{
 		return "Enum " + value;
 	}
@@ -55,7 +55,6 @@ public class ConEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-
 		value = EnumManager.getProperEnumName (e, expr0);
 		return EnumManager.addEnum (value);
 	}
