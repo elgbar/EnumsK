@@ -80,14 +80,17 @@ command /enum:
 ```
 
 ## Performance
-My tests shows that accesing enums are just as fast (if not even sightly faster) than accessing normal global variables.
+My tests shows that **accessing enums are slightly faster** than accessing normal global variables. In the test you set a local variable to an enum or a global variable. This you do 100 000 times. To further smooth out the score I did the test 10 times each. This gives me:
 
-In my [test skript](https://gist.github.com/kh498/6fe84df0f1a37de294147e456f721eb5) I got these results from running it once:
+**Enums takes an average of 536.27ms** <p>
+**Global variable takes an average of 608.94ms (72.67ms more)**
 
-For enums:<br>
-![image](https://cloud.githubusercontent.com/assets/1556738/20042714/5a50e676-a47f-11e6-88d7-e4d76cfff40f.png)
+I ran both commands ten times each and took the average of those two. I did not include the first timing as it was a great gap between its time and the other timings. I have a theory on why it is sush a gap. As the server just started up it did not have the variables loaded into the cache and therefore it took to get it as you have to access the disk.
 
-For variables:<br>
-![image](https://cloud.githubusercontent.com/assets/1556738/20042712/48eb86b6-a47f-11e6-97cd-e49e93bfc511.png)
+In my [test skript](https://gist.github.com/kh498/6fe84df0f1a37de294147e456f721eb5) you can see the all the script I used, individual results from each test and the whole log for the test.
 
 **But note that performance may vary**
+
+## What's next?
+* Better usability
+ * This will mean you can do ```"text" is |enum.sameText|``` and ```give player |enum.item|```
