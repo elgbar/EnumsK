@@ -82,7 +82,7 @@ command /enum:
 ## Performance
 My tests shows that **accessing enums are slightly faster** than accessing normal global variables. In the test you set a local variable to an enum or a global variable. This you do 100 000 times. To further smooth out the score I did the test 10 times each. This gives me:
 
-**Enums takes an average of 536.27ms** 
+**Enums takes an average of 536.27ms** <p>
 **Global variable takes an average of 608.94ms (72.67ms more)**
 
 I ran both commands ten times each and took the average of those two. I did not include the first timing as it was a great gap between its time and the other timings. I have a theory on why it is sush a gap. As the server just started up it did not have the variables loaded into the cache and therefore it took to get it as you have to access the disk.
