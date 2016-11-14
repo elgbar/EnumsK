@@ -55,7 +55,7 @@ public class EffEnumValue extends Effect
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "Enum value";
+		return "Enum value " + value;
 	}
 
 	@ SuppressWarnings ("unchecked")
@@ -70,7 +70,7 @@ public class EffEnumValue extends Effect
 			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
 		} catch (SkriptAPIException ex)
 		{
-			Skript.error ("The enum value " + expr1 + " is not a valid object, all enum values below it will NOT be loaded in.");
+			Skript.error ("The enum value " + expr1 + " is not a valid object it will NOT be loaded in!");
 			return;
 		}
 

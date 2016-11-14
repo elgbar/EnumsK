@@ -43,4 +43,10 @@ public class EnumEvent extends Event
 	{
 		return handlers;
 	}
+
+	@ Override
+	public String toString ()
+	{
+		return "Enum event";
+	}
 }
