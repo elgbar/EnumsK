@@ -93,4 +93,4 @@ In my [test skript](https://gist.github.com/kh498/6fe84df0f1a37de294147e456f721e
 
 ## What's next?
 * Better usability
- * This will mean you can do ```"text" is |enum.sameText|``` and ```give player |enum.item|```
+ * This will mean you can do ```"text" contains |enum.sameText|``` and ```give player |enum.item|```
