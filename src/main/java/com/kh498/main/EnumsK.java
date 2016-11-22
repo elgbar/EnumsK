@@ -65,17 +65,18 @@ public class EnumsK extends JavaPlugin
 			Skript.registerEffect (EffEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
 
 			/* Expressions */
-			Skript.registerExpression (ExprSingularSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.%object%\\|",
-					"value %object% (from|of) sub[ ]enum %object% (from|of) enum %object%");
-
-			Skript.registerExpression (ExprIterateSubEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.%object%.*\\|",
-					"[all] values (from|of) enum %object%");
 
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%\\|",
 					"value %object% (from|of) enum %object%");
 
 			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.*\\|",
 					"[all] values (from|of) enum %object%");
+
+			Skript.registerExpression (ExprSingularSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.%object%\\|",
+					"value %object% (from|of) sub enum %object% (from|of) enum %object%");
+
+			Skript.registerExpression (ExprIterateSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.*\\|",
+					"[all] values (from|of) sub enum %object% from enum %object%");
 
 		} else
 		{
