@@ -40,7 +40,7 @@ public class EffEnumValue extends Effect
 	private Object expr0;
 	private Object expr1;
 
-	private Object parentEnum = "";
+	private Object parentEnum;
 	private Object currEnum;
 	private Object value;
 	private Object obj;
