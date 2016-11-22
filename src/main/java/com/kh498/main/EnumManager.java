@@ -75,30 +75,10 @@ public class EnumManager
 			return false;
 		}
 
-		LinkedHashMap<Object, Object> g = null;
 
-		try
 		{
-			g = (LinkedHashMap<Object, Object>) skEnums.get (parentEnum);
-		} catch (NullPointerException e)
-		{
-			System.out.println ("Failed to get parent enum");
 			return false;
 		}
-
-		if (g != null)
-		{
-			try
-			{
-				@ SuppressWarnings ("unused")
-				Object h = g.get (newEnumName);
-			} catch (NullPointerException e)
-			{
-				System.out.println ("Failed to get sub enum");
-				return false;
-			}
-		}
-//		System.out.println ("All systems good! Values: newEnumName=" + newEnumName + ", parentEnum=" + parentEnum);
 		return true;
 	}
 
