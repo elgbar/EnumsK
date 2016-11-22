@@ -105,7 +105,7 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "single sub enum value '" + fullExpr + "'";
+		return "single sub enum value";
 	}
 
 }

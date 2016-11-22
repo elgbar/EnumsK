@@ -53,31 +53,31 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		Object enumValue = EnumManager.getProperEnumName (e, expr0);
-		Object enumName = EnumManager.getProperEnumName (e, expr1);
+		Object enumValue;
+		Object enumName;
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 		if (fullExpr.charAt (0) == '|')
 		{
-			try
-			{
-				@ SuppressWarnings ("unchecked")
-				Object[] obj2 = { ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumValue)).get (enumName) };
-				return obj2;
-			} catch (NullPointerException e1)
-			{
-			}
+			enumValue = EnumManager.getProperEnumName (e, expr1);
+			enumName = EnumManager.getProperEnumName (e, expr0);
+
 		} else
 		{
-			try
-			{
-				@ SuppressWarnings ("unchecked")
-				Object[] obj = { ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
-				return obj;
-			} catch (NullPointerException e2)
-			{
-			}
+			enumValue = EnumManager.getProperEnumName (e, expr0);
+			enumName = EnumManager.getProperEnumName (e, expr1);
+
 		}
+
+		try
+		{
+			@ SuppressWarnings ("unchecked")
+			final Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
+			return obj2;
+		} catch (NullPointerException e1)
+		{
+		}
+
 		return null;
 	}
 
@@ -96,7 +96,7 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "single enum value '" + fullExpr + "'";
+		return "single enum value";
 	}
 
 }

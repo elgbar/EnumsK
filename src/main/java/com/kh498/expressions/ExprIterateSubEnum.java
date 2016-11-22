@@ -70,10 +70,9 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 
 		try
 		{
-			Object[] obj = {
-							.values () };
-			return obj;
 			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) ((LinkedHashMap<Object, Object>) EnumManager.getEnums ()
+					.get (enumParent)).get (enumName)).values ();
+			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)
 		{
 		}
@@ -96,7 +95,7 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "all values of an enum";
+		return "all values of an sub enum";
 	}
 
 }
