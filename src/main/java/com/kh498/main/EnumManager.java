@@ -144,11 +144,10 @@ public class EnumManager
 		{
 			enumValues = new LinkedHashMap<Object, Object> ();
 		}
-		enumValues.put (valueName, obj);
-
-		test (parentEnum, currEnum, valueName);
-		return true;
-//		return enumValues.put (valueName, obj) != null;
+//		enumValues.put (valueName, obj);
+//		test (parentEnum, currEnum, valueName);
+//		return true;
+		return enumValues.put (valueName, obj) != null;
 	}
 
 	@ SuppressWarnings ("unchecked")
