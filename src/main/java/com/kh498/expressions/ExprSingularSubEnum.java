@@ -56,9 +56,9 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 	@ SuppressWarnings ("unchecked")
 	protected Object[] get (Event e)
 	{
-		String enumParent;
-		String enumName;
-		String enumValue;
+		Object enumParent;
+		Object enumName;
+		Object enumValue;
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 		if (fullExpr.charAt (0) == '|')
@@ -67,8 +67,8 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
 			enumValue = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
 
-			System.out.println (enumValue);
-			EnumManager.test (enumParent, enumName, enumValue);
+//			System.out.println (enumValue);
+//			EnumManager.test (enumParent, enumName, enumValue);
 
 		} else
 		{
@@ -79,8 +79,8 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 
 		try
 		{
-			Object[] obj = {
-					((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+			final Object[] obj = {
+					((LinkedHashMap<Object, Object>) ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
 							.get (enumValue) };
 			return obj;
 		} catch (NullPointerException e2)

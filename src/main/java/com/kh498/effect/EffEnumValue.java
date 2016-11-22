@@ -40,9 +40,9 @@ public class EffEnumValue extends Effect
 	private Object expr0;
 	private Object expr1;
 
-	private String parentEnum = "";
-	private String currEnum;
-	private String value;
+	private Object parentEnum = "";
+	private Object currEnum;
+	private Object value;
 	private Object obj;
 
 	@ Override
@@ -56,15 +56,15 @@ public class EffEnumValue extends Effect
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "Enum object " + value + " from enum " + currEnum + ((parentEnum.isEmpty ()) ? "" : " and it's parent enum " + parentEnum);
+		return "Enum object " + value + " from enum " + currEnum + ((parentEnum == null) ? "" : " and it's parent enum " + parentEnum);
 	}
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	protected void execute (Event e)
 	{
-		String expr = EnumManager.getConKey (this.getParent ().toString ());
 		value = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+		String expr = EnumManager.getConKey (this.getParent ().toString ()).toString ();
 
 		if (expr.contains ("parent"))
 		{

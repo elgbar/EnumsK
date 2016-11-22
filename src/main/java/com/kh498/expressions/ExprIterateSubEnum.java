@@ -19,6 +19,7 @@
 
 package com.kh498.expressions;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import javax.annotation.Nullable;
@@ -54,8 +55,8 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		String enumParent;
-		String enumName;
+		Object enumParent;
+		Object enumName;
 		if (fullExpr.charAt (0) == '|')
 		{
 			enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
@@ -70,9 +71,9 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 		try
 		{
 			Object[] obj = {
-					((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
 							.values () };
 			return obj;
+			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) ((LinkedHashMap<Object, Object>) EnumManager.getEnums ()
 		} catch (NullPointerException ex)
 		{
 		}
