@@ -78,7 +78,7 @@ public class EffEnumValue extends Effect
 		}
 		try
 		{
-			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
+			obj = ((Expression<Object>) expr1).getSingle (e); //the object needs to be valid
 		} catch (SkriptAPIException ex)
 		{
 			Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in!");

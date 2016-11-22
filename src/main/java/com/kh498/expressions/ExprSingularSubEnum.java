@@ -56,37 +56,37 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 	@ SuppressWarnings ("unchecked")
 	protected Object[] get (Event e)
 	{
-		String enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
-		String enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
-		String enumValue = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
-
-		System.out.println (enumValue);
-		EnumManager.test (enumParent, enumName, enumValue);
+		String enumParent;
+		String enumName;
+		String enumValue;
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 		if (fullExpr.charAt (0) == '|')
 		{
-			try
-			{
-				Object[] obj = {
-						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
-								.get (enumValue) };
-				return obj;
-			} catch (NullPointerException e1)
-			{
-			}
+			enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+			enumValue = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
+
+			System.out.println (enumValue);
+			EnumManager.test (enumParent, enumName, enumValue);
+
 		} else
 		{
-			try
-			{
-				Object[] obj = {
-						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumValue)).get (enumName))
-								.get (enumParent) };
-				return obj;
-			} catch (NullPointerException e2)
-			{
-			}
+			enumParent = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
+			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+			enumValue = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
 		}
+
+		try
+		{
+			Object[] obj = {
+					((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+							.get (enumValue) };
+			return obj;
+		} catch (NullPointerException e2)
+		{
+		}
+
 		return null;
 	}
 
