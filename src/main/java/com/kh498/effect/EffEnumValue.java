@@ -63,8 +63,8 @@ public class EffEnumValue extends Effect
 	@ Override
 	protected void execute (Event e)
 	{
-		value = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
 		String expr = EnumManager.getConKey (this.getParent ().toString ()).toString ();
+		value = EnumManager.getProperEnumName (e, expr0);
 
 		if (expr.contains ("parent"))
 		{

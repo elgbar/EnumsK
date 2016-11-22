@@ -220,7 +220,7 @@ public class EnumManager
 			return ((Expression<Object>) expr).getSingle (e);
 		} catch (SkriptAPIException ex)
 		{
-			return "" + expr;
+			return expr.toString ().replaceAll ("'", "");
 		}
 	}
 

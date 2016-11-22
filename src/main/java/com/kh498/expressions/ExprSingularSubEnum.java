@@ -63,18 +63,18 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
 		if (fullExpr.charAt (0) == '|')
 		{
-			enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
-			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
-			enumValue = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
+			enumParent = EnumManager.getProperEnumName (e, expr0);
+			enumName = EnumManager.getProperEnumName (e, expr1);
+			enumValue = EnumManager.getProperEnumName (e, expr2);
 
 //			System.out.println (enumValue);
 //			EnumManager.test (enumParent, enumName, enumValue);
 
 		} else
 		{
-			enumParent = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
-			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
-			enumValue = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+			enumParent = EnumManager.getProperEnumName (e, expr2);
+			enumName = EnumManager.getProperEnumName (e, expr1);
+			enumValue = EnumManager.getProperEnumName (e, expr0);
 		}
 
 		try

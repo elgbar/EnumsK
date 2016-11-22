@@ -59,13 +59,13 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 		Object enumName;
 		if (fullExpr.charAt (0) == '|')
 		{
-			enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
-			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+			enumParent = EnumManager.getProperEnumName (e, expr0);
+			enumName = EnumManager.getProperEnumName (e, expr1);
 
 		} else
 		{
-			enumParent = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
-			enumName = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+			enumParent = EnumManager.getProperEnumName (e, expr1);
+			enumName = EnumManager.getProperEnumName (e, expr0);
 		}
 
 		try

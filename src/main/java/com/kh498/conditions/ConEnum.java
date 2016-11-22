@@ -58,7 +58,7 @@ public class ConEnum extends Condition
 	public boolean check (Event e)
 	{
 
-		name = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+		name = EnumManager.getProperEnumName (e, expr0);
 //		System.out.println (this.getIndentation () + "Trying to add a new enum with the name " + name + "and parent " + parent);
 		if (!EnumManager.addEnum (name.toString (), null))
 		{
