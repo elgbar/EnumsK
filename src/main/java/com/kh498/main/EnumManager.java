@@ -60,6 +60,11 @@ public class EnumManager
 	{
 		if (parentEnum == null)
 		{
+			if (skEnums.containsKey (newEnumName))
+			{
+				Skript.error ("An enum with the name " + newEnumName + " already exists!");
+				return true;
+			}
 			skEnums.put (newEnumName, new LinkedHashMap<Object, Object> ());
 		} else if (skEnums.containsKey (parentEnum) || skEnums.containsKey (parentEnum))
 		{
@@ -69,13 +74,15 @@ public class EnumManager
 			{
 				tempMap = new LinkedHashMap<Object, Object> ();
 			}
+
+			if (tempMap.containsKey (newEnumName))
+			{
+				Skript.error ("A sub enum with the name " + newEnumName + " already exists in the enum " + parentEnum);
+				return true;
+			}
 			tempMap.put (newEnumName, new LinkedHashMap<Object, Object> ());
+
 		} else
-		{
-			return false;
-		}
-
-
 		{
 			return false;
 		}
@@ -123,6 +130,10 @@ public class EnumManager
 		if (enumValues == null)
 		{
 			enumValues = new LinkedHashMap<Object, Object> ();
+		} else if (enumValues.containsKey (valueName))
+		{
+			Skript.error ("An enum cannot hold two identical enum keys!");
+			return true;
 		}
 //		enumValues.put (valueName, obj);
 //		test (parentEnum, currEnum, valueName);
