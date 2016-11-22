@@ -54,33 +54,29 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-
-		final Object enumParent = EnumManager.getProperEnumName (e, expr0);
-		final Object enumName = EnumManager.getProperEnumName (e, expr1);
-
+		String enumParent;
+		String enumName;
 		if (fullExpr.charAt (0) == '|')
 		{
-			try
-			{
-				Object[] obj = {
-						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
-								.values () };
-				return obj;
-			} catch (NullPointerException ex)
-			{
-			}
+			enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+			enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+
 		} else
 		{
-			try
-			{
-				Object[] obj = {
-						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).get (enumParent))
-								.values () };
-				return obj;
-			} catch (NullPointerException ex)
-			{
-			}
+			enumParent = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+			enumName = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
 		}
+
+		try
+		{
+			Object[] obj = {
+					((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+							.values () };
+			return obj;
+		} catch (NullPointerException ex)
+		{
+		}
+
 		return null;
 	}
 
