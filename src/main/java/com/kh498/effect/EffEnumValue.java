@@ -40,7 +40,9 @@ public class EffEnumValue extends Effect
 	private Object expr0;
 	private Object expr1;
 
-	private Object value;
+	private String parentEnum = "";
+	private String currEnum;
+	private String value;
 	private Object obj;
 
 	@ Override
@@ -48,34 +50,42 @@ public class EffEnumValue extends Effect
 	{
 		expr0 = expr[0];
 		expr1 = expr[1];
-
 		return EnumManager.isValidEvent ("Enum values cannot be declared outside of Enums event.");
 	}
 
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "Enum value " + value;
+		return "Enum object " + value + " from enum " + currEnum + ((parentEnum.isEmpty ()) ? "" : " and it's parent enum " + parentEnum);
 	}
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	protected void execute (Event e)
 	{
-		/* Get the parents expression (the key to the enum-map) */
-		Object key = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
+		String expr = EnumManager.getConKey (this.getParent ().toString ());
+		value = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
 
+		if (expr.contains ("parent"))
+		{
+			String[] value = expr.replaceAll ("'", "").split (" from parent ");
+			currEnum = value[0];
+			parentEnum = value[1];
+//			System.out.println (currEnum + " | " + parentEnum);
+		} else
+		{
+			currEnum = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
+		}
 		try
 		{
 			obj = ((Expression<Object>) expr1).getSingle (e); //the object need to be valid
 		} catch (SkriptAPIException ex)
 		{
-			Skript.error ("The enum value " + expr1 + " is not a valid object it will NOT be loaded in!");
+			Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in!");
 			return;
 		}
 
-		value = EnumManager.getProperEnumName (e, expr0);
-		EnumManager.addValue (key, value, obj);
+		EnumManager.addValue (parentEnum, currEnum, value, obj);
 	}
 
 }

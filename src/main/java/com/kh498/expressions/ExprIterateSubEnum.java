@@ -19,7 +19,6 @@
 
 package com.kh498.expressions;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import javax.annotation.Nullable;
@@ -33,16 +32,20 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 
-public class ExprIterateEnum extends SimpleExpression<Object>
+public class ExprIterateSubEnum extends SimpleExpression<Object>
 {
 
 	private Expression<Object> expr0;
+	private Expression<Object> expr1;
+	private String fullExpr;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
 		expr0 = (Expression<Object>) exprs[0];
+		expr1 = (Expression<Object>) exprs[1];
+		fullExpr = parseResult.expr;
 		return true;
 	}
 
@@ -52,14 +55,31 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	protected Object[] get (Event e)
 	{
 
-//		final Object enumName = expr0.getSingle (e);
-		final Object enumName = EnumManager.getProperEnumName (e, expr0);
-		try
+		final Object enumParent = EnumManager.getProperEnumName (e, expr0);
+		final Object enumName = EnumManager.getProperEnumName (e, expr1);
+
+		if (fullExpr.charAt (0) == '|')
 		{
-			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
-			return objectMap.toArray (new Object[objectMap.size ()]);
-		} catch (NullPointerException ex)
+			try
+			{
+				Object[] obj = {
+						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+								.values () };
+				return obj;
+			} catch (NullPointerException ex)
+			{
+			}
+		} else
 		{
+			try
+			{
+				Object[] obj = {
+						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).get (enumParent))
+								.values () };
+				return obj;
+			} catch (NullPointerException ex)
+			{
+			}
 		}
 		return null;
 	}

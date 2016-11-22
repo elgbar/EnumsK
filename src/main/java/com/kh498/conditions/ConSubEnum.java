@@ -34,35 +34,36 @@ import ch.njol.util.Kleenean;
 /**
  * @author kh498
  */
-public class ConEnum extends Condition
+public class ConSubEnum extends Condition
 {
 	private Object expr0;
 	private Object name = null;
+	private Object parent = null;
 
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
 		expr0 = expr[0];
 
-		EnumManager.setLastExpr (parseResult.expr);
+		parent = EnumManager.getConKey (EnumManager.getLastExpr ()); //get the last "real" enum
+//		System.out.println ("sub enum parent: " + parent);
 		return EnumManager.isValidEvent ("A new enum cannot be declared outside of Enums event.");
 	}
 
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "Enum " + name;
+		return "Sub enum " + name + " from parent " + parent;
 	}
 
 	@ Override
 	public boolean check (Event e)
 	{
-
 		name = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
 //		System.out.println (this.getIndentation () + "Trying to add a new enum with the name " + name + "and parent " + parent);
-		if (!EnumManager.addEnum (name.toString (), null))
+		if (!EnumManager.addEnum (name.toString (), parent.toString ()))
 		{
-			Skript.error ("Could not add the enum " + name);
+			Skript.error ("Could not add the sub enum " + name + " to the parent " + parent);
 		}
 		return true;
 	}

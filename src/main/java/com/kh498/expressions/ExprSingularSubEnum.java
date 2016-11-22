@@ -19,7 +19,6 @@
 
 package com.kh498.expressions;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import javax.annotation.Nullable;
@@ -33,33 +32,60 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 
-public class ExprIterateEnum extends SimpleExpression<Object>
+public class ExprSingularSubEnum extends SimpleExpression<Object>
 {
 
 	private Expression<Object> expr0;
+	private Expression<Object> expr1;
+	private Expression<Object> expr2;
+	private String fullExpr;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
 		expr0 = (Expression<Object>) exprs[0];
+		expr1 = (Expression<Object>) exprs[1];
+		expr2 = (Expression<Object>) exprs[2];
+		fullExpr = parseResult.expr;
 		return true;
 	}
 
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
+	@ SuppressWarnings ("unchecked")
 	protected Object[] get (Event e)
 	{
+		String enumParent = EnumManager.getProperEnumName (e, expr0).toString ().replaceAll ("'", "");
+		String enumName = EnumManager.getProperEnumName (e, expr1).toString ().replaceAll ("'", "");
+		String enumValue = EnumManager.getProperEnumName (e, expr2).toString ().replaceAll ("'", "");
 
-//		final Object enumName = expr0.getSingle (e);
-		final Object enumName = EnumManager.getProperEnumName (e, expr0);
-		try
+		System.out.println (enumValue);
+		EnumManager.test (enumParent, enumName, enumValue);
+
+		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
+		if (fullExpr.charAt (0) == '|')
 		{
-			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
-			return objectMap.toArray (new Object[objectMap.size ()]);
-		} catch (NullPointerException ex)
+			try
+			{
+				Object[] obj = {
+						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+								.get (enumValue) };
+				return obj;
+			} catch (NullPointerException e1)
+			{
+			}
+		} else
 		{
+			try
+			{
+				Object[] obj = {
+						((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumValue)).get (enumName))
+								.get (enumParent) };
+				return obj;
+			} catch (NullPointerException e2)
+			{
+			}
 		}
 		return null;
 	}
@@ -67,7 +93,7 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	@ Override
 	public boolean isSingle ()
 	{
-		return false;
+		return true;
 	}
 
 	@ Override
@@ -79,7 +105,7 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "all values of an enum";
+		return "single sub enum value '" + fullExpr + "'";
 	}
 
 }
