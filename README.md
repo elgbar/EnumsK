@@ -17,6 +17,13 @@ Enums
 
 ---
 
+>Declare a new sub enum (condition)
+```C#
+[create ][new ] sub enum %object%
+```
+
+---
+
 >Add a value to an enum (condition)
 ```C#
 [set value ]%object%( to |[]:[])%object%
@@ -32,18 +39,26 @@ or
 ```C#
 |%object%.%object%|
 ```
+for sub enums just add a dot and then another object like this
+```C#
+|%object%.%object%.%object%|
+```
 ---
 
->Get all values for an enum (expression)
+>Get all values from an enum (expression)
 ```C#
 [all] values (from|of) enum %object%
 ```
 or
 ```C#
-|%object%.*|
+|%object%::*|
 ```
+---
 
-
+>Get all values from a sub enum (expression)
+```C#
+|%object%.%object%::*|
+```
 
 ## Example
 
@@ -57,6 +72,9 @@ enums: #You can only declare enums under this event	#Do not name the enum in plu
 		455: 42
 		PLAYER1: "kh498" parsed as offline player #Do not use a type as an enum name eg player, console, tool as skript parsed them as %player%, %console% or %tool%
 		item1 : iron sword named "%|Capability.PLAYER1|%"
+		sub enum TEST: #Need to include the word sub when declaring a sub enum
+			test1: "test"
+			test2: "testing"
 
 command /enum:
 	trigger:
@@ -76,10 +94,13 @@ command /enum:
 		send "%all values from enum Capability%" #They are listed in the order they were declared
 		send "%value ""OK"" from enum ""Sword""%"
 		send "%value 455 from enum Capability%"
-
+		send "%|Capability.TEST::*|%"
+		send "%|Capability.TEST.test1|%"
 ```
 
 ## Performance
+
+#### Note: This should be taken with a grain of salt since the code have been changed since when I performed these tests.
 My tests shows that **accessing enums are slightly faster** than accessing normal global variables. In the test you set a local variable to an enum or a global variable. This you do 100 000 times. To further smooth out the score I did the test 10 times each. This gives me:
 
 **Enums takes an average of 536.27ms** <p>
