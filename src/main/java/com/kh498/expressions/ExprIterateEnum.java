@@ -55,7 +55,7 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 		final Object enumName = EnumManager.getProperEnumName (e, expr0);
 		try
 		{
-			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();
+			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
 			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)
 		{

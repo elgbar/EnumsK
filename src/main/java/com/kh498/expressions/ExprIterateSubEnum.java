@@ -70,7 +70,7 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 
 		try
 		{
-			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) ((LinkedHashMap<Object, Object>) EnumManager.getEnums ()
+			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ()
 					.get (enumParent)).get (enumName)).values ();
 			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)

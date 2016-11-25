@@ -38,8 +38,8 @@ public class ConSubEnum extends Condition
 {
 	private Object expr0;
 
-	private Object name;
-	private Object parent;
+	private String name;
+	private String parent;
 
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)

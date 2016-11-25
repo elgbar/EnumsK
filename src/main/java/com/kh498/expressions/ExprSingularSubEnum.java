@@ -80,7 +80,7 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 		try
 		{
 			final Object[] obj = {
-					((LinkedHashMap<Object, Object>) ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
+					((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumParent)).get (enumName))
 							.get (enumValue) };
 			return obj;
 		} catch (NullPointerException e2)
