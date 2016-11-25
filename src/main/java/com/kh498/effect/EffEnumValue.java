@@ -50,6 +50,12 @@ public class EffEnumValue extends Effect
 	{
 		expr0 = expr[0];
 		expr1 = expr[1];
+		if ('*' == (parseResult.expr.charAt (0)))
+		{
+			Skript.error ("The name of the enum cannot be '*'");
+			return false;
+		}
+
 		return EnumManager.isValidEvent ("Enum values cannot be declared outside of Enums event.");
 	}
 
