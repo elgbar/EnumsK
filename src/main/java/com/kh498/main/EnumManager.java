@@ -21,6 +21,8 @@ package com.kh498.main;
 
 import java.util.LinkedHashMap;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.event.Event;
 
 import com.kh498.events.EnumEvent;
@@ -36,26 +38,54 @@ import ch.njol.skript.lang.Expression;
  */
 public class EnumManager
 {
-	private static LinkedHashMap<Object, Object> skEnums;
+	private static LinkedHashMap<String, Object> skEnums;
+
+	private static String lastExpr;
 
 	EnumManager ()
 	{
-		skEnums = new LinkedHashMap<Object, Object> ();
+		skEnums = new LinkedHashMap<String, Object> ();
 	}
 
 	/**
+	 * 
 	 * @param newEnumName
-	 *        Object
+	 *        The name of the new enum
+	 * @param parentEnum
+	 *        If null add the enum to main Map if not add to the parentEnum
 	 * @return False if an enum with that name already exists
 	 */
-	public static boolean addEnum (Object newEnumName)
+	@ SuppressWarnings ("unchecked")
+	public static boolean addEnum (String newEnumName, @ Nullable String parentEnum)
 	{
-		if (isValidEnum (newEnumName))
+		if (parentEnum == null)
 		{
-			Skript.error ("An enum with the name '" + newEnumName + "' already exists.");
+			if (skEnums.containsKey (newEnumName))
+			{
+				Skript.error ("An enum with the name " + newEnumName + " already exists!");
+				return true;
+			}
+			skEnums.put (newEnumName, new LinkedHashMap<String, Object> ());
+		} else if (skEnums.containsKey (parentEnum) || skEnums.containsKey (parentEnum))
+		{
+			/*put a new enum inside the parentEnum*/
+			LinkedHashMap<String, Object> tempMap = (LinkedHashMap<String, Object>) skEnums.get (parentEnum);
+			if (tempMap == null)
+			{
+				tempMap = new LinkedHashMap<String, Object> ();
+			}
+
+			if (tempMap.containsKey (newEnumName))
+			{
+				Skript.error ("A sub enum with the name " + newEnumName + " already exists in the enum " + parentEnum);
+				return true;
+			}
+			tempMap.put (newEnumName, new LinkedHashMap<String, Object> ());
+
+		} else
+		{
 			return false;
 		}
-		skEnums.put (newEnumName, new LinkedHashMap<Object, Object> ());
 		return true;
 	}
 
@@ -69,25 +99,43 @@ public class EnumManager
 	 *        Object, the object the enum is refering to
 	 * @return false if the mother enum does exist
 	 */
-	public static boolean addValue (Object enumName, Object valueName, Object obj)
+	@ SuppressWarnings ("unchecked")
+	public static boolean addValue (@ Nullable String parentEnum, String currEnum, String valueName, Object obj)
 	{
-		if (!isValidEnum (enumName))
-		{
-			Skript.error ("The enum '" + enumName + "' does not exist.");
-			return false;
-		}
+		LinkedHashMap<String, Object> enumValues = null;
 
-		@ SuppressWarnings ("unchecked")
-		LinkedHashMap<Object, Object> enumValues = (LinkedHashMap<Object, Object>) skEnums.get (enumName);
+		if (parentEnum == null)
+		{
+			if (!skEnums.containsKey (currEnum))
+			{
+				Skript.error ("The enum " + currEnum + " does not exist.");
+				return false;
+			}
+			enumValues = (LinkedHashMap<String, Object>) skEnums.get (currEnum);
+		} else
+		{
+			if (!skEnums.containsKey (parentEnum))
+			{
+				Skript.error ("The enum " + parentEnum + " does not exist.");
+				return false;
+			} else if (!((LinkedHashMap<String, Object>) skEnums.get (parentEnum)).containsKey (currEnum))
+			{
+				Skript.error ("The sub enum " + currEnum + " does not exist.");
+				return false;
+			}
+
+			enumValues = (LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) skEnums.get (parentEnum)).get (currEnum);
+		}
 
 		if (enumValues == null)
 		{
-			enumValues = new LinkedHashMap<Object, Object> ();
+			enumValues = new LinkedHashMap<String, Object> ();
+		} else if (enumValues.containsKey (valueName))
+		{
+			Skript.error ("An enum cannot hold two identical enum keys!");
+			return true;
 		}
-
-		enumValues.put (valueName, obj);
-
-		return true;
+		return enumValues.put (valueName, obj) != null;
 	}
 
 	/**
@@ -105,17 +153,7 @@ public class EnumManager
 		return true;
 	}
 
-	/**
-	 * @param enumName
-	 *        Object
-	 * @return boolean
-	 */
-	private static boolean isValidEnum (Object enumName)
-	{
-		return skEnums.containsKey (enumName);
-	}
-
-	public static LinkedHashMap<Object, Object> getEnums ()
+	public static LinkedHashMap<String, Object> getEnums ()
 	{
 		return skEnums;
 	}
@@ -133,14 +171,39 @@ public class EnumManager
 	 * @return Either expr from the event, if not valid then the string version of expr
 	 */
 	@ SuppressWarnings ("unchecked")
-	public static Object getProperEnumName (Event e, Object expr)
+	public static String getProperEnumName (Event e, Object expr)
 	{
 		try
 		{
-			return ((Expression<Object>) expr).getSingle (e);
-		} catch (SkriptAPIException e1)
+			return (String) ((Expression<Object>) expr).getSingle (e);
+		} catch (SkriptAPIException | ClassCastException ex)
 		{
-			return "" + expr;
+			return expr.toString ().replaceAll ("'", "");
 		}
+	}
+
+	/**
+	 * @return the lastExpr
+	 */
+	public static String getLastExpr ()
+	{
+		return lastExpr;
+	}
+
+	/**
+	 * @param lastExpr
+	 *        the lastExpr to set
+	 */
+	public static void setLastExpr (String lastExpr)
+	{
+		EnumManager.lastExpr = lastExpr;
+	}
+
+	public static String getConKey (@ Nullable String key)
+	{
+		/* Get the parents expression (the key to the enum-map) */
+		if (key == null || key.isEmpty ())
+			return null;
+		return key.replaceFirst ("(?i)Sub ", "").replaceFirst ("(?i)enum ", "");
 	}
 }

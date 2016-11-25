@@ -19,6 +19,7 @@
 
 package com.kh498.expressions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
@@ -52,12 +53,21 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 	protected Object[] get (Event e)
 	{
 
-//		final Object enumName = expr0.getSingle (e);
 		final Object enumName = EnumManager.getProperEnumName (e, expr0);
 		try
 		{
-			final Collection<Object> objectMap = ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).values ();
-			return objectMap.toArray (new Object[objectMap.size ()]);
+			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
+
+			ArrayList<Object> noNullList = new ArrayList<Object> ();
+
+			for (Object LHM : objectMap)
+			{
+				if (!(LHM instanceof LinkedHashMap<?, ?>))
+				{
+					noNullList.add (LHM);
+				}
+			}
+			return noNullList.toArray (new Object[noNullList.size ()]);
 		} catch (NullPointerException ex)
 		{
 		}

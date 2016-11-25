@@ -24,10 +24,12 @@ import java.util.logging.Level;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.kh498.conditions.ConEnum;
+import com.kh498.conditions.ConSubEnum;
 import com.kh498.effect.EffEnumValue;
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
 import com.kh498.expressions.ExprIterateEnum;
+import com.kh498.expressions.ExprIterateSubEnum;
 import com.kh498.expressions.ExprSingularEnum;
 
 import ch.njol.skript.Skript;
@@ -54,17 +56,22 @@ public class EnumsK extends JavaPlugin
 			/* The event */
 			Skript.registerEvent ("enums register", EvtEnum.class, EnumEvent.class, "Enums");
 
-			/* Condition */
+			/* Conditions */
 			Skript.registerCondition (ConEnum.class, "[create ][new ]enum %object%");
+			Skript.registerCondition (ConSubEnum.class, "[create ][new ] sub enum %object%");
 
 			/* Effect */
 			Skript.registerEffect (EffEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
 
 			/* Expressions */
-			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.%object%\\|",
+
+			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%\\|",
 					"value %object% (from|of) enum %object%");
 
-			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.*\\|",
+			Skript.registerExpression (ExprIterateSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%::*\\|",
+					"[all] values (from|of) sub enum %object% from enum %object%");
+
+			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%::*\\|",
 					"[all] values (from|of) enum %object%");
 
 		} else
