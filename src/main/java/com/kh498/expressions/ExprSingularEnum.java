@@ -37,6 +37,8 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 
 	private Expression<Object> expr0;
 	private Expression<Object> expr1;
+
+	private String[] enums1;
 	private String fullExpr;
 
 	@ SuppressWarnings ("unchecked")
@@ -45,39 +47,53 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	{
 		expr0 = (Expression<Object>) exprs[0];
 		expr1 = (Expression<Object>) exprs[1];
+
+		/*Split the last object into smaller sub objects that represents enums (eg their names)*/
+		enums1 = expr1.toString ().replaceAll ("'", "").split ("\\.");
+
+		//The full text of this expresstion
 		fullExpr = parseResult.expr;
 		return true;
 	}
 
+	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		Object enumValue;
-		Object enumName;
+		String topEnum;
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-		if (fullExpr.charAt (0) == '|')
+		if (fullExpr.charAt (0) != '|' && enums1.length == 1)
 		{
-			enumValue = EnumManager.getProperEnumName (e, expr1);
-			enumName = EnumManager.getProperEnumName (e, expr0);
-
-		} else
-		{
-			enumValue = EnumManager.getProperEnumName (e, expr0);
-			enumName = EnumManager.getProperEnumName (e, expr1);
-
+			enums1[0] = EnumManager.getProperEnumName (e, expr1);
 		}
+
+		topEnum = EnumManager.getProperEnumName (e, expr0);
 
 		try
 		{
-			@ SuppressWarnings ("unchecked")
-			final Object[] obj2 = { ((LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (enumName)).get (enumValue) };
-			return obj2;
-		} catch (NullPointerException e1)
+			Object map = EnumManager.getEnums ().get (topEnum);
+
+			if (enums1.length == 1) //there is no sub enum
+			{
+				map = ((LinkedHashMap<String, Object>) map).get (enums1[0]);
+			} else
+			{
+				/*Loop through each layer of maps untill you get your value*/
+				for (Object obj : enums1)
+				{
+					map = ((LinkedHashMap<String, Object>) map).get (obj);
+				}
+			}
+			/*cast the object from the map to an Object array and return it*/
+			final Object[] returnObj = { map };
+			return returnObj;
+
+		} catch (NullPointerException ex)
 		{
 		}
-
+		/*If something fails just return null*/
 		return null;
 	}
 

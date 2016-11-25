@@ -73,8 +73,7 @@ public class EnumsK extends JavaPlugin
 
 			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%::*\\|",
 					"[all] values (from|of) enum %object%");
-//			Skript.registerExpression (ExprSingularSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.%object%\\|",
-//					"value %object% (from|of) sub enum %object% (from|of) enum %object%");
+
 		} else
 		{
 			this.getLogger ().log (Level.SEVERE, "Could not enable EnumsK due too Skript not accepting registrations.");
