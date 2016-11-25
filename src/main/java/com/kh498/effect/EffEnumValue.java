@@ -74,10 +74,9 @@ public class EffEnumValue extends Effect
 
 		if (expr.contains ("parent"))
 		{
-			String[] value = expr.replaceAll ("'", "").split (" from parent ");
+			String[] value = expr.split (" from parent ");
 			currEnum = value[0];
 			parentEnum = value[1];
-//			System.out.println (currEnum + " | " + parentEnum);
 		} else
 		{
 			currEnum = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");

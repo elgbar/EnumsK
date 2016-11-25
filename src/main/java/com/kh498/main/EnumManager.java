@@ -135,39 +135,7 @@ public class EnumManager
 			Skript.error ("An enum cannot hold two identical enum keys!");
 			return true;
 		}
-//		enumValues.put (valueName, obj);
-//		test (parentEnum, currEnum, valueName);
-//		return true;
 		return enumValues.put (valueName, obj) != null;
-	}
-
-	@ SuppressWarnings ("unchecked")
-	public static void test (Object parentEnum, Object currEnum, Object valueName)
-	{
-
-		if (parentEnum == null) //only test sub enums
-			return;
-
-		System.out.println ("P: " + parentEnum + " | N: " + currEnum + " | V: " + valueName);
-
-		LinkedHashMap<Object, Object> a = null;
-		LinkedHashMap<Object, Object> b = null;
-		Object c = null;
-		try
-		{
-			a = (LinkedHashMap<Object, Object>) EnumManager.getEnums ().get (parentEnum);
-			b = (LinkedHashMap<Object, Object>) a.get (currEnum);
-			c = b.get (valueName);
-		} catch (NullPointerException e1)
-		{
-		}
-
-		System.out.println ("parent: " + a);
-		System.out.println ("Name: " + b);
-		System.out.println ("Value: " + c);
-		if (c == null)
-			System.out.println ("Failed to get object");
-
 	}
 
 	/**

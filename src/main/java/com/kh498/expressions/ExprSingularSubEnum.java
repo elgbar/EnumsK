@@ -67,9 +67,6 @@ public class ExprSingularSubEnum extends SimpleExpression<Object>
 			enumName = EnumManager.getProperEnumName (e, expr1);
 			enumValue = EnumManager.getProperEnumName (e, expr2);
 
-//			System.out.println (enumValue);
-//			EnumManager.test (enumParent, enumName, enumValue);
-
 		} else
 		{
 			enumParent = EnumManager.getProperEnumName (e, expr2);
