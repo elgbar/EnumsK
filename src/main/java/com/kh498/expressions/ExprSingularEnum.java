@@ -41,6 +41,8 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	private String[] enums1;
 	private String fullExpr;
 
+//	private Object map;
+
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
@@ -64,12 +66,18 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 		String topEnum;
 
 		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-		if (fullExpr.charAt (0) != '|' && enums1.length == 1)
+		if (fullExpr.charAt (0) == '|')
 		{
-			enums1[0] = EnumManager.getProperEnumName (e, expr1);
+			topEnum = EnumManager.getProperEnumName (e, expr0);
+			if (enums1.length == 1)
+			{
+				enums1[0] = EnumManager.getProperEnumName (e, expr1);
+			}
+		} else
+		{
+			topEnum = EnumManager.getProperEnumName (e, expr1);
+			enums1[0] = EnumManager.getProperEnumName (e, expr0);
 		}
-
-		topEnum = EnumManager.getProperEnumName (e, expr0);
 
 		try
 		{
