@@ -31,7 +31,6 @@ import com.kh498.events.EvtEnum;
 import com.kh498.expressions.ExprIterateEnum;
 import com.kh498.expressions.ExprIterateSubEnum;
 import com.kh498.expressions.ExprSingularEnum;
-import com.kh498.expressions.ExprSingularSubEnum;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
@@ -69,15 +68,13 @@ public class EnumsK extends JavaPlugin
 			Skript.registerExpression (ExprSingularEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%\\|",
 					"value %object% (from|of) enum %object%");
 
-			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%.*\\|",
-					"[all] values (from|of) enum %object%");
-
-			Skript.registerExpression (ExprSingularSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.%object%\\|",
-					"value %object% (from|of) sub enum %object% (from|of) enum %object%");
-
-			Skript.registerExpression (ExprIterateSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.*\\|",
+			Skript.registerExpression (ExprIterateSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%::*\\|",
 					"[all] values (from|of) sub enum %object% from enum %object%");
 
+			Skript.registerExpression (ExprIterateEnum.class, Object.class, ExpressionType.PROPERTY, "\\|%object%::*\\|",
+					"[all] values (from|of) enum %object%");
+//			Skript.registerExpression (ExprSingularSubEnum.class, Object.class, ExpressionType.COMBINED, "\\|%object%.%object%.%object%\\|",
+//					"value %object% (from|of) sub enum %object% (from|of) enum %object%");
 		} else
 		{
 			this.getLogger ().log (Level.SEVERE, "Could not enable EnumsK due too Skript not accepting registrations.");
