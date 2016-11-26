@@ -26,7 +26,11 @@ Enums
 
 >Add a value to an enum (condition)
 ```C#
-[set value ]%object%( to |[]:[])%object%
+set value %object% to %object%
+```
+or
+```C#
+%object%: %object%
 ```
 
 ---
