@@ -61,7 +61,7 @@ public class EnumsK extends JavaPlugin
 			Skript.registerCondition (ConSubEnum.class, "[create ][new ] sub enum %object%");
 
 			/* Effect */
-			Skript.registerEffect (EffEnumValue.class, "[set value ]%object%( to |[]:[])%object%");
+			Skript.registerEffect (EffEnumValue.class, "set value %object% to %object%", "%object%: %object%");
 
 			/* Expressions */
 
