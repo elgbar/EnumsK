@@ -81,13 +81,28 @@ public class EffEnumValue extends Effect
 		{
 			currEnum = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
 		}
+
 		try
 		{
 			obj = ((Expression<Object>) expr1).getSingle (e); //the object needs to be valid
 		} catch (SkriptAPIException ex)
 		{
-			Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in!");
-			return;
+
+			/* Check if the object is a boolean, if not return error 
+			 * The reason for the extra ' is that is how the toString() 
+			 * function works here...
+			 */
+			if ("'true'".equalsIgnoreCase (expr1.toString ()))
+			{
+				obj = true;
+			} else if ("'false'".equalsIgnoreCase (expr1.toString ()))
+			{
+				obj = false;
+			} else
+			{
+				Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in!");
+				return;
+			}
 		}
 
 		EnumManager.addValue (parentEnum, currEnum, value, obj);

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.kh498.main</groupId>
   <artifactId>EnumsK</artifactId>
-  <version>0.4.1-ALPHA</version>   
+  <version>0.4.2-ALPHA</version>   
    <build>
          <resources>
          	<resource>
