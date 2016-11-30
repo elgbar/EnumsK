@@ -63,7 +63,7 @@ public class EnumManager
 			if (skEnums.containsKey (newEnumName))
 			{
 				Skript.error ("An enum with the name " + newEnumName + " already exists!");
-				return true;
+				return false;
 			}
 			skEnums.put (newEnumName, new LinkedHashMap<String, Object> ());
 		} else if (skEnums.containsKey (parentEnum) || skEnums.containsKey (parentEnum))
@@ -78,7 +78,7 @@ public class EnumManager
 			if (tempMap.containsKey (newEnumName))
 			{
 				Skript.error ("A sub enum with the name " + newEnumName + " already exists in the enum " + parentEnum);
-				return true;
+				return false;
 			}
 			tempMap.put (newEnumName, new LinkedHashMap<String, Object> ());
 
@@ -175,7 +175,19 @@ public class EnumManager
 	{
 		try
 		{
-			return (String) ((Expression<Object>) expr).getSingle (e);
+			String s = (String) ((Expression<Object>) expr).getSingle (e);
+			if (s == null)
+			{
+				if ("the last parse error".equals (expr.toString ()))
+					Skript.error ("The name of an enum cannot be 'ERROR'");
+				else
+					Skript.error ("If you see this somehing bad happend... Certain keywords cannot be used as an enum name (this is skript fault). "
+							+ "An example of a bad keyword is ERROR. For some reason skript think you just wrote 'the last parse error' "
+							+ "and trying to parse this results in a undefind object. Please report this issue to https://github.com/kh498/EnumsK/issues "
+							+ "or https://forums.skunity.com/topic/7454/addon-enumsk-0-4-0-alpha-create-your-own-enums-in-skript I am sorry for the inconvenience -kh498");
+				return null;
+			}
+			return s;
 		} catch (SkriptAPIException | ClassCastException ex)
 		{
 			return expr.toString ().replaceAll ("'", "");

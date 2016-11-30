@@ -71,6 +71,8 @@ public class EffEnumValue extends Effect
 	{
 		String expr = EnumManager.getConKey (this.getParent ().toString ()).toString ();
 		value = EnumManager.getProperEnumName (e, expr0);
+		if (value == null)
+			return;
 
 		if (expr.contains ("parent"))
 		{

@@ -37,7 +37,7 @@ import ch.njol.util.Kleenean;
 public class ConEnum extends Condition
 {
 	private Object expr0;
-	private Object name = null;
+	private String name = "";
 
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
@@ -57,12 +57,15 @@ public class ConEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-
 		name = EnumManager.getProperEnumName (e, expr0);
-//		System.out.println (this.getIndentation () + "Trying to add a new enum with the name " + name + "and parent " + parent);
-		if (!EnumManager.addEnum (name.toString (), null))
+
+		if (name == null)
+			return false;
+
+		if (!EnumManager.addEnum (name, null))
 		{
 			Skript.error ("Could not add the enum " + name);
+			return false;
 		}
 		return true;
 	}

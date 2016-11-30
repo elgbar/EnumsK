@@ -60,11 +60,15 @@ public class ConSubEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-//		System.out.println ("teasgg: " + EnumManager.getProperEnumName (e, expr0));
 		name = EnumManager.getProperEnumName (e, expr0);
+
+		if (name == null)
+			return false;
+
 		if (!EnumManager.addEnum (name, parent))
 		{
 			Skript.error ("Could not add the sub enum " + name + " to the parent " + parent);
+			return false;
 		}
 		return true;
 	}
