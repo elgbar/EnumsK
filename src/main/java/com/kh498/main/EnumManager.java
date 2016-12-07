@@ -63,7 +63,7 @@ public class EnumManager
 			if (skEnums.containsKey (newEnumName))
 			{
 				Skript.error ("An enum with the name " + newEnumName + " already exists!");
-				return false;
+				return true;
 			}
 			skEnums.put (newEnumName, new LinkedHashMap<String, Object> ());
 		} else if (skEnums.containsKey (parentEnum) || skEnums.containsKey (parentEnum))
@@ -78,7 +78,7 @@ public class EnumManager
 			if (tempMap.containsKey (newEnumName))
 			{
 				Skript.error ("A sub enum with the name " + newEnumName + " already exists in the enum " + parentEnum);
-				return false;
+				return true;
 			}
 			tempMap.put (newEnumName, new LinkedHashMap<String, Object> ());
 
