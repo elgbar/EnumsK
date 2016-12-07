@@ -120,6 +120,8 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 			return returnObj;
 		} catch (NullPointerException ex)
 		{
+			/*If the enum cannot be found halt, let the user know*/
+			Skript.error ("Can not find the enum");
 			return null;
 		}
 	}

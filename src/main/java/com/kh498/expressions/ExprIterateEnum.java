@@ -77,6 +77,7 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 		} catch (NullPointerException ex)
 		{
 		}
+		Skript.error ("Can not find the enum");
 		return null;
 	}
 

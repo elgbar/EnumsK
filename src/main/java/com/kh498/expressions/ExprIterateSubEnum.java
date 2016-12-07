@@ -81,6 +81,7 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 			return objectMap.toArray (new Object[objectMap.size ()]);
 		} catch (NullPointerException ex)
 		{
+			Skript.error ("Can not find the sub enum");
 		}
 
 		return null;
