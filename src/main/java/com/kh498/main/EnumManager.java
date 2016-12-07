@@ -66,15 +66,10 @@ public class EnumManager
 				return true;
 			}
 			skEnums.put (newEnumName, new LinkedHashMap<String, Object> ());
-		} else if (skEnums.containsKey (parentEnum) || skEnums.containsKey (parentEnum))
+		} else if (skEnums.containsKey (parentEnum))
 		{
 			/*put a new enum inside the parentEnum*/
 			LinkedHashMap<String, Object> tempMap = (LinkedHashMap<String, Object>) skEnums.get (parentEnum);
-			if (tempMap == null)
-			{
-				tempMap = new LinkedHashMap<String, Object> ();
-			}
-
 			if (tempMap.containsKey (newEnumName))
 			{
 				Skript.error ("A sub enum with the name " + newEnumName + " already exists in the enum " + parentEnum);
