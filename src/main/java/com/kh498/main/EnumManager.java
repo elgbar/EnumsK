@@ -216,6 +216,6 @@ public class EnumManager
 		/* Get the parents expression (the key to the enum-map) */
 		if (key == null || key.isEmpty ())
 			return null;
-		return key.replaceFirst ("(?i)Sub ", "").replaceFirst ("(?i)enum ", "");
+		return key.replaceFirst ("(?i)Sub ", "").replaceFirst ("(?i)enum ", "").replaceFirst ("create new ", "");
 	}
 }
