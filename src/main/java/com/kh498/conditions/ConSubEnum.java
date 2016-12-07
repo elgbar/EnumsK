@@ -36,7 +36,7 @@ import ch.njol.util.Kleenean;
  */
 public class ConSubEnum extends Condition
 {
-	private Object expr0;
+	private String currFullExpr;
 
 	private String name;
 	private String parent;
@@ -44,9 +44,12 @@ public class ConSubEnum extends Condition
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
-		expr0 = expr[0];
+		currFullExpr = parseResult.expr;
+		String expr0 = EnumManager.getConKey (parseResult.expr);
+		String lastExpr = EnumManager.getConKey (EnumManager.getLastExpr ()); //Get the last "real" enum
 
-		parent = EnumManager.getConKey (EnumManager.getLastExpr ()); //get the last "real" enum
+		parent = EnumManager.getProperEnumName (lastExpr);
+		name = EnumManager.getProperEnumName (expr0);
 
 		return EnumManager.isValidEvent ("A new enum cannot be declared outside of Enums event.");
 	}
@@ -60,7 +63,6 @@ public class ConSubEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-		name = EnumManager.getProperEnumName (e, expr0);
 
 		if (name == null)
 			return false;

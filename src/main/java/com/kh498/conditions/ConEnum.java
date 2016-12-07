@@ -36,15 +36,20 @@ import ch.njol.util.Kleenean;
  */
 public class ConEnum extends Condition
 {
-	private Object expr0;
+	private String currFullExpr;
+
 	private String name = "";
 
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
-		expr0 = expr[0];
+		currFullExpr = parseResult.expr;
+		String expr0 = EnumManager.getConKey (parseResult.expr);
+		name = EnumManager.getProperEnumName (expr0);
 
+		/*Update last real enum*/
 		EnumManager.setLastExpr (parseResult.expr);
+
 		return EnumManager.isValidEvent ("A new enum cannot be declared outside of Enums event.");
 	}
 
@@ -57,8 +62,6 @@ public class ConEnum extends Condition
 	@ Override
 	public boolean check (Event e)
 	{
-		name = EnumManager.getProperEnumName (e, expr0);
-
 		if (name == null)
 			return false;
 

@@ -28,6 +28,7 @@ import org.bukkit.event.Event;
 
 import com.kh498.main.EnumManager;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -35,10 +36,12 @@ import ch.njol.util.Kleenean;
 
 public class ExprIterateSubEnum extends SimpleExpression<Object>
 {
-
 	private Expression<Object> expr0;
 	private Expression<Object> expr1;
+
 	private String fullExpr;
+	private Object enumParent;
+	private Object enumName;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
@@ -47,27 +50,30 @@ public class ExprIterateSubEnum extends SimpleExpression<Object>
 		expr0 = (Expression<Object>) exprs[0];
 		expr1 = (Expression<Object>) exprs[1];
 		fullExpr = parseResult.expr;
-		return true;
+
+		if (fullExpr.charAt (0) == '|')
+		{
+			enumParent = EnumManager.getProperEnumName (expr0);
+			enumName = EnumManager.getProperEnumName (expr1);
+
+		} else
+		{
+			enumParent = EnumManager.getProperEnumName (expr1);
+			enumName = EnumManager.getProperEnumName (expr0);
+		}
+		return (this.getEnums () != null) ? true : false;
 	}
 
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		Object enumParent;
-		Object enumName;
-		if (fullExpr.charAt (0) == '|')
-		{
-			enumParent = EnumManager.getProperEnumName (e, expr0);
-			enumName = EnumManager.getProperEnumName (e, expr1);
+		return getEnums ();
+	}
 
-		} else
-		{
-			enumParent = EnumManager.getProperEnumName (e, expr1);
-			enumName = EnumManager.getProperEnumName (e, expr0);
-		}
-
+	@ SuppressWarnings ("unchecked")
+	private Object[] getEnums ()
+	{
 		try
 		{
 			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) ((LinkedHashMap<String, Object>) EnumManager.getEnums ()

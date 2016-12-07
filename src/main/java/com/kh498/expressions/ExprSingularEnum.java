@@ -27,6 +27,7 @@ import org.bukkit.event.Event;
 
 import com.kh498.main.EnumManager;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -34,75 +35,44 @@ import ch.njol.util.Kleenean;
 
 public class ExprSingularEnum extends SimpleExpression<Object>
 {
-
-	private Expression<Object> expr0;
-	private Expression<Object> expr1;
+	private String currFullExpr;
 
 	private String[] enums1;
-	private String fullExpr;
+	private String topEnum;
 
-//	private Object map;
-
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
-		expr0 = (Expression<Object>) exprs[0];
-		expr1 = (Expression<Object>) exprs[1];
+		/*The full text of this expresstion*/
+		currFullExpr = parseResult.expr;
+		String[] exprArray;
+		if (currFullExpr.charAt (0) == '|')
+		{
+			/*Split the full expression into an array (test[]), then set test[0] to topEnum and add the other values to enums1[]*/
+			exprArray = currFullExpr.replaceAll ("\\|", "").split ("\\.");
 
-		/*Split the last object into smaller sub objects that represents enums (eg their names)*/
-		enums1 = expr1.toString ().replaceAll ("'", "").split ("\\.");
+			topEnum = EnumManager.getProperEnumName (exprArray[0]);
 
-		//The full text of this expresstion
-		fullExpr = parseResult.expr;
-		return true;
+			enums1 = new String[exprArray.length - 1];
+			for (int i = 0; i < exprArray.length - 1; i++)
+			{
+				enums1[i] = exprArray[i + 1];
+			}
+		} else
+		{
+			exprArray = currFullExpr.replaceAll ("(values?|from|of|all| )", "").split ("enum");
+			enums1 = new String[1];
+			topEnum = EnumManager.getProperEnumName (exprArray[1]);
+			enums1[0] = EnumManager.getProperEnumName (exprArray[0]);
+		}
+		return (this.getEnum () != null) ? true : false;
 	}
 
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
 	protected Object[] get (Event e)
 	{
-		String topEnum;
-
-		/* Get the object by first getting the value map (Map<Object, Object>) then getting the value */
-		if (fullExpr.charAt (0) == '|')
-		{
-			topEnum = EnumManager.getProperEnumName (e, expr0);
-			if (enums1.length == 1)
-			{
-				enums1[0] = EnumManager.getProperEnumName (e, expr1);
-			}
-		} else
-		{
-			topEnum = EnumManager.getProperEnumName (e, expr1);
-			enums1[0] = EnumManager.getProperEnumName (e, expr0);
-		}
-
-		try
-		{
-			Object map = EnumManager.getEnums ().get (topEnum);
-
-			if (enums1.length == 1) //there is no sub enum
-			{
-				map = ((LinkedHashMap<String, Object>) map).get (enums1[0]);
-			} else
-			{
-				/*Loop through each layer of maps untill you get your value*/
-				for (Object obj : enums1)
-				{
-					map = ((LinkedHashMap<String, Object>) map).get (obj);
-				}
-			}
-			/*cast the object from the map to an Object array and return it*/
-			final Object[] returnObj = { map };
-			return returnObj;
-
-		} catch (NullPointerException ex)
-		{
-		}
-		/*If something fails just return null*/
-		return null;
+		return this.getEnum ();
 	}
 
 	@ Override
@@ -121,6 +91,37 @@ public class ExprSingularEnum extends SimpleExpression<Object>
 	public String toString (@ Nullable Event e, boolean debug)
 	{
 		return "single enum value";
+	}
+
+	@ SuppressWarnings ("unchecked")
+	private Object[] getEnum ()
+	{
+		try
+		{
+			Object map = EnumManager.getEnums ().get (topEnum);
+
+			if (enums1.length == 1) //there is no sub enum
+			{
+				map = ((LinkedHashMap<String, Object>) map).get (enums1[0]);
+			} else
+			{
+				/*Loop through each layer of maps untill you get your value*/
+				for (Object obj : enums1)
+				{
+					map = ((LinkedHashMap<String, Object>) map).get (obj);
+				}
+			}
+			/*cast the object from the map to an Object array and return it*/
+			if (map == null)
+			{
+				throw new NullPointerException ();
+			}
+			final Object[] returnObj = { map };
+			return returnObj;
+		} catch (NullPointerException ex)
+		{
+			return null;
+		}
 	}
 
 }

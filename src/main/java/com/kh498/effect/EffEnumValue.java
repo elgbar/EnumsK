@@ -37,24 +37,43 @@ import ch.njol.util.Kleenean;
  */
 public class EffEnumValue extends Effect
 {
-	private Object expr0;
 	private Object expr1;
+
+	private String currFullExpr;
 
 	private String parentEnum;
 	private String currEnum;
-	private String value;
-	private Object obj;
+	private String enumNode;
+	private Object value;
 
 	@ Override
 	public boolean init (final Expression<?>[] expr, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult)
 	{
-		expr0 = expr[0];
-		expr1 = expr[1];
-		if ('*' == (parseResult.expr.charAt (0)))
+		currFullExpr = parseResult.expr;
+		if ('*' == (currFullExpr.charAt (0)))
 		{
-			Skript.error ("The name of the enum cannot be '*'");
+			Skript.error ("The name of the enum node cannot be '*'");
+			return false;
+		} else if (currFullExpr.contains ("enum"))
+		{
+			Skript.error ("Cannot use the world 'enum' in the name of an enum node");
 			return false;
 		}
+
+		/*Two different syntaxes, two different ways of splitting the expression*/
+		int splitLoc;
+		if (currFullExpr.contains (":"))
+		{
+			splitLoc = currFullExpr.indexOf (":");
+			enumNode = currFullExpr.substring (0, splitLoc);
+		} else
+		{
+			splitLoc = currFullExpr.indexOf (" to ");
+			//We have the string "set value " at the start of this expression
+			enumNode = currFullExpr.substring (10, splitLoc);
+		}
+
+		expr1 = expr[1]; //will become 'value'
 
 		return EnumManager.isValidEvent ("Enum values cannot be declared outside of Enums event.");
 	}
@@ -62,21 +81,17 @@ public class EffEnumValue extends Effect
 	@ Override
 	public String toString (@ Nullable Event e, boolean debug)
 	{
-		return "Enum object " + value + " from enum " + currEnum + ((parentEnum == null) ? "" : " and it's parent enum " + parentEnum);
+		return "Enum object " + enumNode + " from enum " + currEnum + ((parentEnum == null) ? "" : " and it's parent enum " + parentEnum);
 	}
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	protected void execute (Event e)
 	{
-		String expr = EnumManager.getConKey (this.getParent ().toString ()).toString ();
-		value = EnumManager.getProperEnumName (e, expr0);
-		if (value == null)
-			return;
-
-		if (expr.contains ("parent"))
+		String parentFullExpr = EnumManager.getConKey (this.getParent ().toString ());
+		if (parentFullExpr.contains ("parent"))
 		{
-			String[] value = expr.split (" from parent ");
+			String[] value = parentFullExpr.split (" from parent ");
 			currEnum = value[0];
 			parentEnum = value[1];
 		} else
@@ -84,9 +99,12 @@ public class EffEnumValue extends Effect
 			currEnum = this.getParent ().toString ().replaceFirst ("(?i)enum ", "");
 		}
 
+		if (enumNode == null)
+			return;
+
 		try
 		{
-			obj = ((Expression<Object>) expr1).getSingle (e); //the object needs to be valid
+			value = ((Expression<Object>) expr1).getSingle (e); //the object needs to be valid
 		} catch (SkriptAPIException ex)
 		{
 
@@ -96,18 +114,17 @@ public class EffEnumValue extends Effect
 			 */
 			if ("'true'".equalsIgnoreCase (expr1.toString ()))
 			{
-				obj = true;
+				value = true;
 			} else if ("'false'".equalsIgnoreCase (expr1.toString ()))
 			{
-				obj = false;
+				value = false;
 			} else
 			{
-				Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in!");
+				Skript.error ("The enum value " + expr1 + " is not a valid object and will NOT be loaded in! (expression: " + currFullExpr + ")");
 				return;
 			}
 		}
 
-		EnumManager.addValue (parentEnum, currEnum, value, obj);
+		EnumManager.addValue (parentEnum, currEnum, enumNode, value);
 	}
-
 }

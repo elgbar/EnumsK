@@ -23,15 +23,11 @@ import java.util.LinkedHashMap;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.event.Event;
-
 import com.kh498.events.EnumEvent;
 import com.kh498.events.EvtEnum;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
-import ch.njol.skript.SkriptAPIException;
-import ch.njol.skript.lang.Expression;
 
 /**
  * @author kh498
@@ -159,34 +155,21 @@ public class EnumManager
 	}
 
 	/**
-	 * @param e
-	 *        The current event
 	 * @param expr
 	 *        The expression gotten from init()
+	 * @return The string version of expr without ' around them
+	 */
+	public static String getProperEnumName (Object expr)
+	{
+		return expr.toString ().replaceAll ("'", "");
+	}
+
+	/**
 	 * @return Either expr from the event, if not valid then the string version of expr
 	 */
-	@ SuppressWarnings ("unchecked")
-	public static String getProperEnumName (Event e, Object expr)
+	public Object getProperEnumName ()
 	{
-		try
-		{
-			String s = (String) ((Expression<Object>) expr).getSingle (e);
-			if (s == null)
-			{
-				if ("the last parse error".equals (expr.toString ()))
-					Skript.error ("The name of an enum cannot be 'ERROR'");
-				else
-					Skript.error ("If you see this somehing bad happend... Certain keywords cannot be used as an enum name (this is skript fault). "
-							+ "An example of a bad keyword is ERROR. For some reason skript think you just wrote 'the last parse error' "
-							+ "and trying to parse this results in a undefind object. Please report this issue to https://github.com/kh498/EnumsK/issues "
-							+ "or https://forums.skunity.com/topic/7454/addon-enumsk-0-4-0-alpha-create-your-own-enums-in-skript I am sorry for the inconvenience -kh498");
-				return null;
-			}
-			return s;
-		} catch (SkriptAPIException | ClassCastException ex)
-		{
-			return expr.toString ().replaceAll ("'", "");
-		}
+		return this.toString ().replaceAll ("'", "");
 	}
 
 	/**

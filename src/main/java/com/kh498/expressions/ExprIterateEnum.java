@@ -29,6 +29,7 @@ import org.bukkit.event.Event;
 
 import com.kh498.main.EnumManager;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -38,29 +39,34 @@ public class ExprIterateEnum extends SimpleExpression<Object>
 {
 
 	private Expression<Object> expr0;
+	private Object enumName;
 
 	@ SuppressWarnings ("unchecked")
 	@ Override
 	public boolean init (Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult)
 	{
 		expr0 = (Expression<Object>) exprs[0];
-		return true;
+		enumName = EnumManager.getProperEnumName (expr0);
+		return (this.getEnums () != null) ? true : false;
 	}
 
-	@ SuppressWarnings ("unchecked")
 	@ Override
 	@ Nullable
 	protected Object[] get (Event e)
 	{
+		return getEnums ();
+	}
 
-		final Object enumName = EnumManager.getProperEnumName (e, expr0);
+	@ SuppressWarnings ("unchecked")
+	private Object[] getEnums ()
+	{
 		try
 		{
 			final Collection<Object> objectMap = ((LinkedHashMap<String, Object>) EnumManager.getEnums ().get (enumName)).values ();
 
 			ArrayList<Object> noNullList = new ArrayList<Object> ();
 
-			for (Object LHM : objectMap)
+			for (Object LHM : objectMap) //LHM = Linked Hash Map
 			{
 				if (!(LHM instanceof LinkedHashMap<?, ?>))
 				{
