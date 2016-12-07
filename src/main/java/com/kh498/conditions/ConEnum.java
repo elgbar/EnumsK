@@ -64,7 +64,8 @@ public class ConEnum extends Condition
 
 		if (!EnumManager.addEnum (name, null))
 		{
-			Skript.error ("Could not add the enum " + name);
+			/*Bypass that we don't get the expression or line number from Skript*/
+			Skript.error ("Could not add the enum " + name + " (expression: " + currFullExpr + ")");
 			return false;
 		}
 		return true;

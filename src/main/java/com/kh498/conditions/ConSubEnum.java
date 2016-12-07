@@ -67,7 +67,8 @@ public class ConSubEnum extends Condition
 
 		if (!EnumManager.addEnum (name, parent))
 		{
-			Skript.error ("Could not add the sub enum " + name + " to the parent " + parent);
+			/*Bypass that we don't get the expression or line number from Skript*/
+			Skript.error ("Could not add the sub enum " + name + " to the parent " + parent + " (expression: " + currFullExpr + ")");
 			return false;
 		}
 		return true;
